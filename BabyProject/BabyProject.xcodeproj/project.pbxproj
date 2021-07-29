@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -29,6 +29,10 @@
 		02B18DCD26B2F4B30032A0B8 /* DH.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02B18DCC26B2F4B30032A0B8 /* DH.storyboard */; };
 		02B18DCF26B2F4BC0032A0B8 /* CH.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02B18DCE26B2F4BC0032A0B8 /* CH.storyboard */; };
 		02B18DD126B2F4C40032A0B8 /* HK.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02B18DD026B2F4C40032A0B8 /* HK.storyboard */; };
+		02D8AC5A26B30CEB0091D4E1 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D8AC5926B30CEB0091D4E1 /* SignUpViewController.swift */; };
+		02D8AC5C26B312490091D4E1 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D8AC5B26B312490091D4E1 /* LoginViewController.swift */; };
+		02D8AC5E26B312590091D4E1 /* FindPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D8AC5D26B312590091D4E1 /* FindPasswordViewController.swift */; };
+		02D8AC6026B312960091D4E1 /* UserDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D8AC5F26B312960091D4E1 /* UserDBModel.swift */; };
 		95C3E5F8B7E65BEEC0318FF1 /* Pods_BabyProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15559C9459B13D8FFA45654B /* Pods_BabyProject.framework */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +61,10 @@
 		02B18DCC26B2F4B30032A0B8 /* DH.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DH.storyboard; sourceTree = "<group>"; };
 		02B18DCE26B2F4BC0032A0B8 /* CH.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CH.storyboard; sourceTree = "<group>"; };
 		02B18DD026B2F4C40032A0B8 /* HK.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HK.storyboard; sourceTree = "<group>"; };
+		02D8AC5926B30CEB0091D4E1 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		02D8AC5B26B312490091D4E1 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		02D8AC5D26B312590091D4E1 /* FindPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPasswordViewController.swift; sourceTree = "<group>"; };
+		02D8AC5F26B312960091D4E1 /* UserDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDBModel.swift; sourceTree = "<group>"; };
 		15559C9459B13D8FFA45654B /* Pods_BabyProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BabyProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D1044F107F927ED3FB80F5C /* Pods-BabyProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabyProject.debug.xcconfig"; path = "Target Support Files/Pods-BabyProject/Pods-BabyProject.debug.xcconfig"; sourceTree = "<group>"; };
 		E1BC7AF6BDF9ABF086969E2A /* Pods-BabyProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabyProject.release.xcconfig"; path = "Target Support Files/Pods-BabyProject/Pods-BabyProject.release.xcconfig"; sourceTree = "<group>"; };
@@ -150,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				02B18DAD26B2F0D50032A0B8 /* EmptyDBModel.swift */,
+				02D8AC5F26B312960091D4E1 /* UserDBModel.swift */,
 			);
 			path = DBModel;
 			sourceTree = "<group>";
@@ -166,6 +175,9 @@
 			isa = PBXGroup;
 			children = (
 				02B18DB926B2F4260032A0B8 /* HKViewController.swift */,
+				02D8AC5926B30CEB0091D4E1 /* SignUpViewController.swift */,
+				02D8AC5B26B312490091D4E1 /* LoginViewController.swift */,
+				02D8AC5D26B312590091D4E1 /* FindPasswordViewController.swift */,
 			);
 			path = HK;
 			sourceTree = "<group>";
@@ -224,7 +236,6 @@
 				6D1044F107F927ED3FB80F5C /* Pods-BabyProject.debug.xcconfig */,
 				E1BC7AF6BDF9ABF086969E2A /* Pods-BabyProject.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -351,13 +362,17 @@
 				02B18D9726B2F03F0032A0B8 /* ViewController.swift in Sources */,
 				02B18D9326B2F03F0032A0B8 /* AppDelegate.swift in Sources */,
 				02B18DBE26B2F4400032A0B8 /* DHViewController.swift in Sources */,
+				02D8AC6026B312960091D4E1 /* UserDBModel.swift in Sources */,
+				02D8AC5C26B312490091D4E1 /* LoginViewController.swift in Sources */,
 				02B18DB226B2F1B70032A0B8 /* Share.swift in Sources */,
 				02B18DC026B2F4460032A0B8 /* SAViewController.swift in Sources */,
 				02B18DC326B2F45B0032A0B8 /* JWViewController.swift in Sources */,
 				02B18DBA26B2F4260032A0B8 /* HKViewController.swift in Sources */,
 				02B18DC526B2F4650032A0B8 /* MJViewController.swift in Sources */,
+				02D8AC5A26B30CEB0091D4E1 /* SignUpViewController.swift in Sources */,
 				02B18D9526B2F03F0032A0B8 /* SceneDelegate.swift in Sources */,
 				02B18DAE26B2F0D50032A0B8 /* EmptyDBModel.swift in Sources */,
+				02D8AC5E26B312590091D4E1 /* FindPasswordViewController.swift in Sources */,
 				02B18DAC26B2F0A80032A0B8 /* EmptyProcess.swift in Sources */,
 				02B18DBC26B2F4350032A0B8 /* CHViewController.swift in Sources */,
 				02B18DB026B2F1270032A0B8 /* ExtensionUIButton.swift in Sources */,
