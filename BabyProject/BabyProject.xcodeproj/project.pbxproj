@@ -34,6 +34,7 @@
 		02D8AC5E26B312590091D4E1 /* FindPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D8AC5D26B312590091D4E1 /* FindPasswordViewController.swift */; };
 		02D8AC6026B312960091D4E1 /* UserDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D8AC5F26B312960091D4E1 /* UserDBModel.swift */; };
 		95C3E5F8B7E65BEEC0318FF1 /* Pods_BabyProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15559C9459B13D8FFA45654B /* Pods_BabyProject.framework */; };
+		F20B1AC926B4222F007A4117 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20B1AC826B4222F007A4117 /* SearchViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,7 @@
 		15559C9459B13D8FFA45654B /* Pods_BabyProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BabyProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D1044F107F927ED3FB80F5C /* Pods-BabyProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabyProject.debug.xcconfig"; path = "Target Support Files/Pods-BabyProject/Pods-BabyProject.debug.xcconfig"; sourceTree = "<group>"; };
 		E1BC7AF6BDF9ABF086969E2A /* Pods-BabyProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabyProject.release.xcconfig"; path = "Target Support Files/Pods-BabyProject/Pods-BabyProject.release.xcconfig"; sourceTree = "<group>"; };
+		F20B1AC826B4222F007A4117 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				02B18DC226B2F45B0032A0B8 /* JWViewController.swift */,
+				F20B1AC826B4222F007A4117 /* SearchViewController.swift */,
 			);
 			path = JW;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				02B18DC526B2F4650032A0B8 /* MJViewController.swift in Sources */,
 				02D8AC5A26B30CEB0091D4E1 /* SignUpViewController.swift in Sources */,
 				02B18D9526B2F03F0032A0B8 /* SceneDelegate.swift in Sources */,
+				F20B1AC926B4222F007A4117 /* SearchViewController.swift in Sources */,
 				02B18DAE26B2F0D50032A0B8 /* EmptyDBModel.swift in Sources */,
 				02D8AC5E26B312590091D4E1 /* FindPasswordViewController.swift in Sources */,
 				02B18DAC26B2F0A80032A0B8 /* EmptyProcess.swift in Sources */,
