@@ -6,18 +6,27 @@
 //
 
 import UIKit
+import TextFieldEffects
 
 class LoginViewController: UIViewController {
 
+    @IBOutlet weak var tfEmail: HoshiTextField!
+    @IBOutlet weak var tfPassword: HoshiTextField!
+    @IBOutlet weak var lblNotice: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        lblNotice.text = ""
 
         // Do any additional setup after loading the view.
     }
     
 
     @IBAction func btnLogin(_ sender: UIButton) {
-        self.performSegue(withIdentifier: "sgLoginSuccess", sender: self)
+        if checkEmpty(){
+            
+            self.performSegue(withIdentifier: "sgLoginSuccess", sender: self)
+        }
     }
     
     
@@ -25,6 +34,29 @@ class LoginViewController: UIViewController {
         self.performSegue(withIdentifier: "sgFindPassword", sender: self)
     }
     
+    func checkEmpty() -> Bool {
+        let email = tfEmail.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let password = tfPassword.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if email?.count == 0 {
+            lblNotice.text = "이메일을 입력해주세요."
+            tfEmail.becomeFirstResponder()
+            return false
+        }
+        if password?.count == 0 {
+            lblNotice.text = "비밀번호를 입력해주세요."
+            tfPassword.becomeFirstResponder()
+            return false
+        }
+        return true
+    }
+    
+    
+    
+    // touch시 keyboard 내리기
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
     /*
     // MARK: - Navigation
 
