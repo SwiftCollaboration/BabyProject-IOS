@@ -22,6 +22,7 @@ private let bottomItems:[String] = [
     "다진마늘",
     "모짜렐라치즈",
     "참기름",
+    "소고기",
     "닭고기"]
 
 private var userSearchItems:[String] = [
