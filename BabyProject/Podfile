@@ -8,5 +8,5 @@ target 'BabyProject' do
   # Pods for BabyProject
 pod 'Kanna', '~> 5.2.2'
 pod 'TextFieldEffects'
-
+pod 'SnapKit', '~> 5.0.0'
 end

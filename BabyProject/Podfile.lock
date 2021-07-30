@@ -1,20 +1,24 @@
 PODS:
   - Kanna (5.2.6)
+  - SnapKit (5.0.1)
   - TextFieldEffects (1.6.0)
 
 DEPENDENCIES:
   - Kanna (~> 5.2.2)
+  - SnapKit (~> 5.0.0)
   - TextFieldEffects
 
 SPEC REPOS:
   trunk:
     - Kanna
+    - SnapKit
     - TextFieldEffects
 
 SPEC CHECKSUMS:
   Kanna: f6a1bd77ecc5b74521cd2cd94539afa758597146
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   TextFieldEffects: 529b8aff706fb40f82c41c780c0777941a893796
 
-PODFILE CHECKSUM: 104c0765b1aaa1331c31ba9991be0a588e4766e6
+PODFILE CHECKSUM: 00063ce5f7e52b87b140a9587e5a1f7cb13cd8ed
 
 COCOAPODS: 1.10.1
