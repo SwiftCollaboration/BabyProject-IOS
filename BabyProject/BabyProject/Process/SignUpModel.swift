@@ -7,13 +7,13 @@
 
 import Foundation
 
-class UserInsertModel{
+class SignUpModel{
     
     func insertUser(email: String, password: String, nickname: String, phone: String, babyage: String) -> Bool{
         
         var result : Bool = true
         
-        var urlPath = "userInsert.jsp"
+        var urlPath = "signUp.jsp"
         let urlAdd = "?email=\(email)&password=\(password)&nickname=\(nickname)&phone=\(phone)&babyage=\(babyage)"
         urlPath += urlAdd
         

@@ -117,7 +117,7 @@ class SignUpViewController: UIViewController {
     
     // DB : insert user
     func dbInsertUser() -> Bool {
-        let insertUser = UserInsertModel()
+        let insertUser = SignUpModel()
         let result = insertUser.insertUser(email: dbInputText[0], password: dbInputText[1], nickname: dbInputText[2], phone: dbInputText[3], babyage: dbInputText[4])
 
         return result
