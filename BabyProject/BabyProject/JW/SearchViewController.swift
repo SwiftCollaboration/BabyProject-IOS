@@ -25,12 +25,6 @@ private let bottomItems:[String] = [
     "소고기",
     "닭고기"]
 
-private var userSearchItems:[String] = [
-    "당근",
-    "우유"]
-
-
-
 class SearchViewController: UIViewController {
 
     /// Outlet
@@ -39,18 +33,29 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var collectionBottomView: UICollectionView!
     @IBOutlet weak var userSearchTableView: UITableView!
     @IBOutlet weak var backButtonItem: UIBarButtonItem!
+
+    /// NSArray
+    var feedItem: NSArray = NSArray()
     
+    /// viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
         setupNavigationbarView()               // Navigationbar Setting
         setupCollectionTopView()               // CollectionView (Top)
         setupCollectionBottomView()            // CollectionView (Bottom)
-        userSearchTableView.dataSource = self  // TableView
-        userSearchTableView.delegate = self    // TableView
+        userSearchTableView.dataSource = self  // TableView : Extension
+        userSearchTableView.delegate = self    // TableView : Extension
+        
     } // viewDidLoad
+    
+    override func viewWillAppear(_ animated: Bool) {
+        // Get Items from DB
+        let keywordModel = KeywordModel()
+        keywordModel.delegate = self
+        keywordModel.downloadItems()
+    } // viewWillAppear
     
     /// 화면구성 * * * * * * * * * * * * * * * * * * * * *
     
@@ -296,20 +301,34 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userSearchItems.count
+        return feedItem.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "userSearchCell", for: indexPath)
         
-        cell.textLabel?.text = userSearchItems[indexPath.row]
+        let item: KeywordDBModel = feedItem[indexPath.row] as! KeywordDBModel
+        
+        cell.textLabel?.text = "\(item.tag!)"
         cell.imageView?.image = UIImage(named: "searchClock.png")
-        
-        
         
         return cell
     }
     
+} // SearchViewController
+
+
+/// Protocol : DB
+extension SearchViewController: KeywordModelProtocol{
+    func itemDownloaded(items: NSArray) {
+        feedItem = items
+        
+        print("Extension : feedItem : \(feedItem)")
+        
+        // * * * Data 받아온 시점 * * *
+        self.userSearchTableView.reloadData()
+    }
     
-}
+} // SearchViewController
+

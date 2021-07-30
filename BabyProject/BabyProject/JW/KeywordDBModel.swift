@@ -10,8 +10,8 @@ import Foundation
 class KeywordDBModel: NSObject{
     
     /// Property
-    var itemcode: Int?
-    var useage: Int?
+    var itemcode: String?
+    var useage: String?
     var tag: String?
     
     /// Empty Constructor
@@ -19,7 +19,7 @@ class KeywordDBModel: NSObject{
     }
     
     /// Constructor
-    init(itemcode: Int, useage: Int, tag: String) {
+    init(itemcode: String, useage: String, tag: String) {
         self.itemcode = itemcode
         self.useage = useage
         self.tag = tag
