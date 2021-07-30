@@ -11,11 +11,23 @@ class HKViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//        self.navigationController?.navigationBar.shadowImage = UIImage()
+//        self.navigationController?.navigationBar.isTranslucent = true
+//        self.navigationController?.view.backgroundColor = .clear
+//        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(descriptor: UIFontDescriptor(name: "System Bold", size: 20), size: 20)]
     }
     
-
+    @IBAction func btnLogin(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "sgLogin", sender: self)
+    }
+    
+    @IBAction func btnSignUp(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "sgSignUp", sender: self)
+    }
+    
+    
     /*
     // MARK: - Navigation
 
