@@ -25,7 +25,12 @@ class LoginViewController: UIViewController {
     @IBAction func btnLogin(_ sender: UIButton) {
         if checkEmpty(){
             
-            self.performSegue(withIdentifier: "sgLoginSuccess", sender: self)
+            let email = tfEmail.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+            let password = tfPassword.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            let loginModel = LoginModel()
+            let result = loginModel.loginResult(email: email!, password: password!)
+            //self.performSegue(withIdentifier: "sgLoginSuccess", sender: self)
         }
     }
     
@@ -68,3 +73,10 @@ class LoginViewController: UIViewController {
     */
 
 }
+
+extension LoginViewController: LoginModelProtocol{
+    func itemDownloaded(items: NSMutableArray) {
+        var userinfo = items
+    }
+}
+
