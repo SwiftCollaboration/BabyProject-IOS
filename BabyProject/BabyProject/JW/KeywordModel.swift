@@ -14,7 +14,7 @@ protocol KeywordModelProtocol {
 class KeywordModel{
     
     var delegate: KeywordModelProtocol!
-    let urlPath = "http://192.168.35.234:8080/ios/searchkeyword_query.jsp"
+    let urlPath = "http://172.20.10.6:8080/ios/searchkeyword_query.jsp"
     
     func downloadItems(){
         let url: URL = URL(string: urlPath)!

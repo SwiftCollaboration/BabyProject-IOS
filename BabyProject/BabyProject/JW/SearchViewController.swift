@@ -36,17 +36,20 @@ class SearchViewController: UIViewController {
 
     /// NSArray
     var feedItem: NSArray = NSArray()
+    var tagArray:[(Int,String)] = []
     
     /// viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        
         setupNavigationbarView()               // Navigationbar Setting
         setupCollectionTopView()               // CollectionView (Top)
         setupCollectionBottomView()            // CollectionView (Bottom)
+        collectionTopView.dataSource = self
         userSearchTableView.dataSource = self  // TableView : Extension
         userSearchTableView.delegate = self    // TableView : Extension
+        
         
     } // viewDidLoad
     
@@ -55,6 +58,8 @@ class SearchViewController: UIViewController {
         let keywordModel = KeywordModel()
         keywordModel.delegate = self
         keywordModel.downloadItems()
+        
+        
     } // viewWillAppear
     
     /// 화면구성 * * * * * * * * * * * * * * * * * * * * *
@@ -77,7 +82,7 @@ class SearchViewController: UIViewController {
         
         self.navigationItem.rightBarButtonItem = searchOK
         
-      
+        
         
     } // setupNavigationbarView
     
@@ -133,6 +138,39 @@ class SearchViewController: UIViewController {
     /// TableView Setting
     
     
+    func readtags() -> Array<(Int,String)> {
+        print("Start func : readtags")
+            var arr:[(Int,String)] = []
+            var arraySorted:[(Int,String)] = []
+            
+            for i in 0..<feedItem.count{
+                let item: KeywordDBModel = feedItem[i] as! KeywordDBModel
+                let getSplits = item.tag?.split(separator: ",")
+                
+                for i in 0..<getSplits!.count{
+                    let value = getSplits![i]
+                    var count = 0
+                    
+                    for i in 0..<arr.count{
+                        if value == arr[i].1{
+                            count += 1
+                            arr[i].0 += 1
+                        }
+                    }
+                    switch count {
+                    case 0:
+                        arr.append((1,String(value)))
+                    default:
+                        break
+                    }
+                }
+                arraySorted = arr.sorted(by: {$0.0 > $1.0})
+                print(arraySorted)
+            }
+            return arraySorted
+        }
+    
+    
     
     
     
@@ -149,7 +187,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
         case self.collectionTopView:
-            return topItems.count
+            return readtags().count
         default:
             return bottomItems.count
             // 상단 Cell
@@ -164,7 +202,8 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         case self.collectionTopView:
             // 상단 Cell
             let topCell = collectionView.dequeueReusableCell(withReuseIdentifier: "topItemCell", for: indexPath) as! CollectionTopViewCell
-            topCell.configure(name: topItems[indexPath.row])
+            
+            topCell.configure(name: self.tagArray[indexPath.row].1)
             return topCell
         default:
             // 하단 Cell
@@ -178,9 +217,10 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         switch collectionView {
+        
         case self.collectionTopView:
             // 상단 Cell
-            return CollectionTopViewCell.fittingSize(availableHeight: 45, name: topItems[indexPath.item])
+            return CollectionTopViewCell.fittingSize(availableHeight: 45, name: self.tagArray[indexPath.item].1)
         default:
             // 하단 Cell
             return CollectionBottomViewCell.fittingSize(availableHeight: 45, name: bottomItems[indexPath.item])
@@ -188,10 +228,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     } // collectionView
     
     
-    
-    
-    
-    
+
     
     
     
@@ -323,11 +360,12 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
 extension SearchViewController: KeywordModelProtocol{
     func itemDownloaded(items: NSArray) {
         feedItem = items
-        
+        self.tagArray = readtags()
         print("Extension : feedItem : \(feedItem)")
         
         // * * * Data 받아온 시점 * * *
         self.userSearchTableView.reloadData()
+        self.collectionTopView.reloadData()
     }
     
 } // SearchViewController
