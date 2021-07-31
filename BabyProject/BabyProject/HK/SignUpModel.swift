@@ -1,19 +1,19 @@
 //
-//  UserInsertModel.swift
+//  SignUpModel.swift
 //  BabyProject
 //
-//  Created by hyogang on 2021/07/30.
+//  Created by hyogang on 2021/07/31.
 //
 
 import Foundation
 
-class SignUpModel{
+class UserInsertModel{
     
     func insertUser(email: String, password: String, nickname: String, phone: String, babyage: String) -> Bool{
         
         var result : Bool = true
         
-        var urlPath = "signUp.jsp"
+        var urlPath = "userInsert.jsp"
         let urlAdd = "?email=\(email)&password=\(password)&nickname=\(nickname)&phone=\(phone)&babyage=\(babyage)"
         urlPath += urlAdd
         
