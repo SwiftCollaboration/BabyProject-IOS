@@ -9,4 +9,5 @@ target 'BabyProject' do
 pod 'Kanna', '~> 5.2.2'
 pod 'TextFieldEffects'
 pod 'SnapKit', '~> 5.0.0'
+pod 'STTextView'
 end
