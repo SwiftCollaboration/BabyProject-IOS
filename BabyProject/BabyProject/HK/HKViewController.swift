@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import KakaoSDKCommon
+import KakaoSDKAuth
+import KakaoSDKUser
 
 class HKViewController: UIViewController {
 
@@ -17,6 +20,35 @@ class HKViewController: UIViewController {
 //        self.navigationController?.navigationBar.isTranslucent = true
 //        self.navigationController?.view.backgroundColor = .clear
 //        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(descriptor: UIFontDescriptor(name: "System Bold", size: 20), size: 20)]
+    }
+    
+    
+    @IBAction func btnKakao(_ sender: UIButton) {
+        UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
+            if let error = error {
+                print(error)
+            }
+            else {
+                print("loginWithKakaoAccount() success.")
+                UserApi.shared.me() {(user, error) in
+                    if let error = error {
+                        print(error)
+                    }
+                    else {
+                        print("me() success.")
+                        
+                        print(user!.id!)
+                        print(user!.kakaoAccount!.email!)
+                        print(user!.kakaoAccount!.profile!.nickname!)
+                    }
+                }
+
+                //do something
+                _ = oauthToken
+            }
+        }
+        
+        self.performSegue(withIdentifier: "sgLoginAPI", sender: self)
     }
     
     @IBAction func btnLogin(_ sender: UIButton) {

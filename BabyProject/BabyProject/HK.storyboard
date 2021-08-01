@@ -32,6 +32,9 @@
                                     <constraint firstAttribute="height" constant="60" id="rPO-er-tM4"/>
                                 </constraints>
                                 <state key="normal" title="카카오"/>
+                                <connections>
+                                    <action selector="btnKakao:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="9tD-2v-8Mp"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vlx-ff-NUo">
                                 <rect key="frame" x="131" y="591" width="60" height="60"/>
@@ -144,6 +147,7 @@
                     <connections>
                         <segue destination="NwI-Et-Msf" kind="show" identifier="sgLogin" id="dJ9-M9-Olx"/>
                         <segue destination="3KX-zL-Sfv" kind="show" identifier="sgSignUp" id="gbx-4P-ndV"/>
+                        <segue destination="KVm-SH-68a" kind="show" identifier="sgLoginAPI" id="0TF-rC-cso"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -527,7 +531,7 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="r4r-Xu-fmz"/>
+        <segue reference="0TF-rC-cso"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="chevron.right.2" catalog="system" width="128" height="105"/>
