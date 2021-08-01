@@ -7,6 +7,7 @@
 
 import Foundation
 
+// 회원가입 정규식
 class CheckSignUpInputField{
     
     func isValidEmail(email: String) -> Bool{

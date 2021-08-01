@@ -8,20 +8,20 @@
 import Foundation
 
 protocol LoginModelProtocol{
-    func itemDownloaded(items: NSMutableArray)
+    func resultOfLogin(nickname:String)
 }
 
 class LoginModel{
+    var delegate: LoginModelProtocol!
 
     func loginResult(email: String, password: String){
 
-        var urlPath = "login.jsp"
+        var urlPath = "loginTest.jsp"
         let urlAdd = "?email=\(email)&password=\(password)"
         urlPath += urlAdd
 
         let share = Share();
         urlPath = share.url(urlPath)
-        print(urlPath)
 
         // 한글 url encoding
         urlPath = urlPath.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
@@ -33,31 +33,27 @@ class LoginModel{
                 print("Failed to download data")
             }else{
                 print("Data is downloaded")
-                self.checkResult(data!)
+                //let loginresult = String(decoding: data!, as: UTF8.self)
+                 self.converLoginResultToDictonary(data: data!)
             }
         }
         task.resume()
     }
-
-    func checkResult(_ data: Data){
-        var jsonResult = NSArray()
-        do{
-            jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! NSArray
-        }catch let error as NSError{
+    
+    
+    func converLoginResultToDictonary(data: Data){
+        
+        var json = ["":""]
+        do {
+            json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as! [String:String]
+        }catch let  error as NSError{
             print(error)
         }
-
-        var jsonElement = NSDictionary()
-        let locations = NSMutableArray()
-
-        for i in 0..<jsonResult.count{
-            jsonElement = jsonResult[i] as! NSDictionary
-            if let result = jsonElement["result"] as? String{
-                locations.add(result)
-            }
-        }
-//        DispatchQueue.main.async(execute: {() -> Void in
-//            self.delegate.itemDownloaded(items: locations)
+        let nickname = json["nickname"]!
+        
+        DispatchQueue.main.async(execute: {() -> Void in
+            self.delegate.resultOfLogin(nickname: nickname)
         })
+        
     }
 }

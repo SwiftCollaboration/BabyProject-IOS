@@ -36,6 +36,8 @@ class SignUpViewController: UIViewController {
         if checkEmptyText(){
             if checkTextRule(){
                 if dbInsertUser(){
+                    Share.userCode = ""
+                    Share.userNickName = dbInputText[2]
                     let resultAlert = UIAlertController(title: "가입 완료", message: "가입을 축하드립니다...", preferredStyle: .alert)
                     let onAction = UIAlertAction(title: "OK", style: .default, handler: {ACTION in
                         self.performSegue(withIdentifier: "sgSignUpSuccess", sender: self)

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class UserInsertModel{
+class SignUpModel{
     
     func insertUser(email: String, password: String, nickname: String, phone: String, babyage: String) -> Bool{
         

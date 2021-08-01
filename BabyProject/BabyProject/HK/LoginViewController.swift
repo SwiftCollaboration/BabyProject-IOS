@@ -13,6 +13,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var tfEmail: HoshiTextField!
     @IBOutlet weak var tfPassword: HoshiTextField!
     @IBOutlet weak var lblNotice: UILabel!
+    var email : String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,17 +21,19 @@ class LoginViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    override func viewWillAppear(_ animated: Bool) {
+    }
     
 
     @IBAction func btnLogin(_ sender: UIButton) {
         if checkEmpty(){
-            
-            let email = tfEmail.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+            let checkEmail = tfEmail.text?.trimmingCharacters(in: .whitespacesAndNewlines)
             let password = tfPassword.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-            
+
             let loginModel = LoginModel()
-            let result = loginModel.loginResult(email: email!, password: password!)
-            //self.performSegue(withIdentifier: "sgLoginSuccess", sender: self)
+            loginModel.loginResult(email: checkEmail!, password: password!)
+            loginModel.delegate = self
+            email = checkEmail!
         }
     }
     
@@ -38,6 +41,8 @@ class LoginViewController: UIViewController {
     @IBAction func btnFindPassword(_ sender: UIButton) {
         self.performSegue(withIdentifier: "sgFindPassword", sender: self)
     }
+    
+    
     
     func checkEmpty() -> Bool {
         let email = tfEmail.text?.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -74,9 +79,20 @@ class LoginViewController: UIViewController {
 
 }
 
-extension LoginViewController: LoginModelProtocol{
-    func itemDownloaded(items: NSMutableArray) {
-        var userinfo = items
+extension LoginViewController: LoginModelProtocol {
+    
+    func resultOfLogin(nickname: String) {
+        //print(nickname)
+        if nickname == "loginFail" {
+            lblNotice.text = "이메일 혹은 비밀번호가 일치하지 않습니다."
+        }else if nickname == "loginError"{
+            lblNotice.text = "에러가 발생했습니다. 시스템 관리자에게 문의해주세요."
+        }else{
+            Share.userCode = email
+            Share.userNickName = nickname
+
+            self.performSegue(withIdentifier: "sgLoginSuccess", sender: self)
+        }
     }
 }
 
