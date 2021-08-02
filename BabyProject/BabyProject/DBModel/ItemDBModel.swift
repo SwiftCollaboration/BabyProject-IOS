@@ -12,8 +12,8 @@ import Foundation
 
 class ItemDBModel: NSObject{ // NSObject :: 가장 큰 타입
     // 전부 다 nil 값 허용
-    var category: Int?
-    var useAge: Int?
+    var category: String?
+    var useAge: String?
     var itemTitle: String?
     var itemContent: String?
     var itemImage: String?
@@ -24,7 +24,7 @@ class ItemDBModel: NSObject{ // NSObject :: 가장 큰 타입
     var uploadDate: Date?
     var dealCompleteDate: Date?
     var deleteDate: Date?
-    var item_userCode: Int?
+    var user_email: String?
     
     // 생성자 생성
     // Empty constructor
@@ -32,8 +32,8 @@ class ItemDBModel: NSObject{ // NSObject :: 가장 큰 타입
         
     }
     
-    init(category: Int, useAge: Int, itemTitle: String, itemContent: String, itemImage: String, itemPrice: Int, userNickname: String, address: String, tag: String,
-         uploadDate: Date, dealCompleteDate: Date, deleteDate: Date, item_userCode: Int) {
+    init(category: String, useAge: String, itemTitle: String, itemContent: String, itemImage: String, itemPrice: Int, userNickname: String, address: String, tag: String,
+         uploadDate: Date, dealCompleteDate: Date, deleteDate: Date, user_email: String) {
         self.category = category
         self.useAge = useAge
         self.itemTitle = itemTitle
@@ -46,7 +46,7 @@ class ItemDBModel: NSObject{ // NSObject :: 가장 큰 타입
         self.uploadDate = uploadDate
         self.dealCompleteDate = dealCompleteDate
         self.deleteDate = deleteDate
-        self.item_userCode = item_userCode
+        self.user_email = user_email
     }
     
 }

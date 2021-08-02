@@ -9,8 +9,8 @@ import UIKit
 import STTextView // placeholder(textView) 기능
 
 // DB Model
-var category = 0
-var useage = 0
+var category = ""
+var useage = ""
 var itemtitle = ""
 var itemcontent = ""
 var itemimage = ""
@@ -18,7 +18,7 @@ var itemprice = 0
 var usernickname = "" // ShareVar
 var address = ""
 var tag = ""
-var item_usercode = 1 // ShareVar
+var item_usercode = "" // ShareVar
 
 // Pickerview Data
 var selectedCategory = "" // 선택한 picker Data (selectedCategory)
@@ -26,7 +26,7 @@ var selectedAge = "" // 선택한 picker Data (selectedAge)
 var selectedLocation = "" // 선택한 picker Data (selectedLocation)
 
 var pickerList = [["의류/침구", "이유식", "목욕/위생", "스킨케어", "외출용품", "문구/잡화"],
-                  ["12개월 미만", "24개월 미만", "만 3~5세"],
+                  ["생후 1년 미만", "생후 2년 미만", "만 3~5세"],
                   ["전체", "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"]]
 
 var itemImageArray: [UIImage] = []
@@ -143,28 +143,7 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             self.btnCategory.setTitle("\(selectedCategory)", for: .normal)
             
             // DB Model용 변수
-            switch selectedCategory {
-            case "의류/침구":
-                category = 0
-                break
-            case "이유식":
-                category = 1
-                break
-            case "목욕/위생":
-                category = 2
-                break
-            case "스킨케어":
-                category = 3
-                break
-            case "외출용품":
-                category = 4
-                break
-            case "문구/잡화":
-                category = 5
-                break
-            default:
-                break
-            }
+            category = selectedCategory
         })
         
         selectAlert.addAction(leftAction)
@@ -190,19 +169,7 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             self.btnAge.setTitle("\(selectedAge)", for: .normal)
             
             // DB Model용 변수
-            switch selectedAge {
-            case "12개월 미만":
-                useage = 1
-                break
-            case "24개월 미만":
-                useage = 2
-                break
-            case "만 3~5세":
-                useage = 3
-                break
-            default:
-                break
-            }
+            useage = selectedAge
         })
         
         selectAlert.addAction(leftAction)
@@ -329,7 +296,7 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }else{
             // DB에 입력
             let itemInsertModel = ItemInsertModel()
-            let result = itemInsertModel.insertItems(category: db_category, useAge: db_useage, itemTitle: itemTitle!, itemContent: itemContent, itemImage: itemImage, itemPrice: itemPrice!, userNickname: userNickname, address: address, tag: tag, item_userCode: db_item_usercode)
+            let result = itemInsertModel.insertItems(category: db_category, useAge: db_useage, itemTitle: itemTitle!, itemContent: itemContent, itemImage: itemImage, itemPrice: itemPrice!, userNickname: userNickname, address: address, tag: tag, user_email: db_item_usercode)
             
             if result{
                 let resultAlert = UIAlertController(title: "완료", message: "입력이 되었습니다.", preferredStyle: .alert)

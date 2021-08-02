@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 // Insert, Update, Delete할 때에는 protocol이 필요 X
 
@@ -14,9 +15,9 @@ class ItemInsertModel {
     var urlPath = "http://192.168.0.127:8080/bebeProject/ItemAddInsert_ios.jsp" // file 경로 지정
     
     // 잘 불러왔다면 true를 return
-    func insertItems(category: Int, useAge: Int, itemTitle: String, itemContent: String, itemImage: String, itemPrice: Int, userNickname: String, address: String, tag: String, item_userCode: Int) -> Bool{
+    func insertItems(category: String, useAge: String, itemTitle: String, itemContent: String, itemImage: String, itemPrice: Int, userNickname: String, address: String, tag: String, user_email: String) -> Bool{
         var result: Bool = true
-        let urlAdd = "?category=\(category)&useAge=\(useAge)&itemTitle=\(itemTitle)&itemContent=\(itemContent)&itemImage=\(itemImage)&itemPrice=\(itemPrice)&userNickname=\(userNickname)&address=\(address)&tag=\(tag)&item_userCode=\(item_userCode)" // urlPath 뒤에 붙는 주소
+        let urlAdd = "?category=\(category)&useAge=\(useAge)&itemTitle=\(itemTitle)&itemContent=\(itemContent)&itemImage=\(itemImage)&itemPrice=\(itemPrice)&userNickname=\(userNickname)&address=\(address)&tag=\(tag)&user_email=\(user_email)" // urlPath 뒤에 붙는 주소
         urlPath = urlPath + urlAdd
         print(urlPath)
         
