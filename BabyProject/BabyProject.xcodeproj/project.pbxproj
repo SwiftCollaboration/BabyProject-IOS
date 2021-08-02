@@ -34,6 +34,13 @@
 		02D8AC5E26B312590091D4E1 /* FindPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D8AC5D26B312590091D4E1 /* FindPasswordViewController.swift */; };
 		02D8AC6026B312960091D4E1 /* UserDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D8AC5F26B312960091D4E1 /* UserDBModel.swift */; };
 		95C3E5F8B7E65BEEC0318FF1 /* Pods_BabyProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15559C9459B13D8FFA45654B /* Pods_BabyProject.framework */; };
+		9F6AAAFC26B564EE00AC05E3 /* MainHomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6AAAFB26B564EE00AC05E3 /* MainHomeTableViewCell.swift */; };
+		9F6AAAFE26B56E4B00AC05E3 /* HomeDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6AAAFD26B56E4B00AC05E3 /* HomeDBModel.swift */; };
+		9F6AAB0026B58EA800AC05E3 /* HomeSelectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6AAAFF26B58EA800AC05E3 /* HomeSelectModel.swift */; };
+		9FC1F5C826B67E6D00F4BE3A /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC1F5C726B67E6D00F4BE3A /* CategoryCollectionViewCell.swift */; };
+		9FC1F5CA26B6F23300F4BE3A /* CategorySelectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC1F5C926B6F23300F4BE3A /* CategorySelectModel.swift */; };
+		9FCCC17126B3DBB60046614C /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCCC17026B3DBB60046614C /* CategoryViewController.swift */; };
+		9FCCC17326B3DBF40046614C /* MainHomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCCC17226B3DBF40046614C /* MainHomeTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +74,13 @@
 		02D8AC5F26B312960091D4E1 /* UserDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDBModel.swift; sourceTree = "<group>"; };
 		15559C9459B13D8FFA45654B /* Pods_BabyProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BabyProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D1044F107F927ED3FB80F5C /* Pods-BabyProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabyProject.debug.xcconfig"; path = "Target Support Files/Pods-BabyProject/Pods-BabyProject.debug.xcconfig"; sourceTree = "<group>"; };
+		9F6AAAFB26B564EE00AC05E3 /* MainHomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHomeTableViewCell.swift; sourceTree = "<group>"; };
+		9F6AAAFD26B56E4B00AC05E3 /* HomeDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDBModel.swift; sourceTree = "<group>"; };
+		9F6AAAFF26B58EA800AC05E3 /* HomeSelectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSelectModel.swift; sourceTree = "<group>"; };
+		9FC1F5C726B67E6D00F4BE3A /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		9FC1F5C926B6F23300F4BE3A /* CategorySelectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectModel.swift; sourceTree = "<group>"; };
+		9FCCC17026B3DBB60046614C /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
+		9FCCC17226B3DBF40046614C /* MainHomeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHomeTableViewController.swift; sourceTree = "<group>"; };
 		E1BC7AF6BDF9ABF086969E2A /* Pods-BabyProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabyProject.release.xcconfig"; path = "Target Support Files/Pods-BabyProject/Pods-BabyProject.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -218,6 +232,13 @@
 			isa = PBXGroup;
 			children = (
 				02B18DBB26B2F4350032A0B8 /* CHViewController.swift */,
+				9FC1F5C726B67E6D00F4BE3A /* CategoryCollectionViewCell.swift */,
+				9FCCC17026B3DBB60046614C /* CategoryViewController.swift */,
+				9F6AAAFB26B564EE00AC05E3 /* MainHomeTableViewCell.swift */,
+				9FCCC17226B3DBF40046614C /* MainHomeTableViewController.swift */,
+				9F6AAAFD26B56E4B00AC05E3 /* HomeDBModel.swift */,
+				9F6AAAFF26B58EA800AC05E3 /* HomeSelectModel.swift */,
+				9FC1F5C926B6F23300F4BE3A /* CategorySelectModel.swift */,
 			);
 			path = CH;
 			sourceTree = "<group>";
@@ -360,21 +381,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				02B18D9726B2F03F0032A0B8 /* ViewController.swift in Sources */,
+				9F6AAAFC26B564EE00AC05E3 /* MainHomeTableViewCell.swift in Sources */,
 				02B18D9326B2F03F0032A0B8 /* AppDelegate.swift in Sources */,
 				02B18DBE26B2F4400032A0B8 /* DHViewController.swift in Sources */,
+				9F6AAB0026B58EA800AC05E3 /* HomeSelectModel.swift in Sources */,
 				02D8AC6026B312960091D4E1 /* UserDBModel.swift in Sources */,
 				02D8AC5C26B312490091D4E1 /* LoginViewController.swift in Sources */,
 				02B18DB226B2F1B70032A0B8 /* Share.swift in Sources */,
 				02B18DC026B2F4460032A0B8 /* SAViewController.swift in Sources */,
 				02B18DC326B2F45B0032A0B8 /* JWViewController.swift in Sources */,
 				02B18DBA26B2F4260032A0B8 /* HKViewController.swift in Sources */,
+				9FC1F5CA26B6F23300F4BE3A /* CategorySelectModel.swift in Sources */,
 				02B18DC526B2F4650032A0B8 /* MJViewController.swift in Sources */,
 				02D8AC5A26B30CEB0091D4E1 /* SignUpViewController.swift in Sources */,
 				02B18D9526B2F03F0032A0B8 /* SceneDelegate.swift in Sources */,
 				02B18DAE26B2F0D50032A0B8 /* EmptyDBModel.swift in Sources */,
+				9FCCC17326B3DBF40046614C /* MainHomeTableViewController.swift in Sources */,
+				9FC1F5C826B67E6D00F4BE3A /* CategoryCollectionViewCell.swift in Sources */,
 				02D8AC5E26B312590091D4E1 /* FindPasswordViewController.swift in Sources */,
 				02B18DAC26B2F0A80032A0B8 /* EmptyProcess.swift in Sources */,
 				02B18DBC26B2F4350032A0B8 /* CHViewController.swift in Sources */,
+				9F6AAAFE26B56E4B00AC05E3 /* HomeDBModel.swift in Sources */,
+				9FCCC17126B3DBB60046614C /* CategoryViewController.swift in Sources */,
 				02B18DB026B2F1270032A0B8 /* ExtensionUIButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
