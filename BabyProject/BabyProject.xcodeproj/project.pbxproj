@@ -37,6 +37,11 @@
 		F20B1AC926B4222F007A4117 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20B1AC826B4222F007A4117 /* SearchViewController.swift */; };
 		F2DA02AC26B43D4300166652 /* KeywordDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DA02AB26B43D4300166652 /* KeywordDBModel.swift */; };
 		F2DA02AE26B4520F00166652 /* KeywordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DA02AD26B4520F00166652 /* KeywordModel.swift */; };
+		F2DA02B026B5884400166652 /* UserSearches.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DA02AF26B5884400166652 /* UserSearches.swift */; };
+		F2DA02B226B677DB00166652 /* UserSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DA02B126B677DB00166652 /* UserSearchCell.swift */; };
+		F2DA02B626B7BD2300166652 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DA02B526B7BD2300166652 /* SearchResultViewController.swift */; };
+		F2DA02B826B7D70900166652 /* SearchDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DA02B726B7D70900166652 /* SearchDBModel.swift */; };
+		F2DA02BA26B7ECCD00166652 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DA02B926B7ECCD00166652 /* SearchModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +79,11 @@
 		F20B1AC826B4222F007A4117 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		F2DA02AB26B43D4300166652 /* KeywordDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordDBModel.swift; sourceTree = "<group>"; };
 		F2DA02AD26B4520F00166652 /* KeywordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordModel.swift; sourceTree = "<group>"; };
+		F2DA02AF26B5884400166652 /* UserSearches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearches.swift; sourceTree = "<group>"; };
+		F2DA02B126B677DB00166652 /* UserSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchCell.swift; sourceTree = "<group>"; };
+		F2DA02B526B7BD2300166652 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
+		F2DA02B726B7D70900166652 /* SearchDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDBModel.swift; sourceTree = "<group>"; };
+		F2DA02B926B7ECCD00166652 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +213,11 @@
 				F20B1AC826B4222F007A4117 /* SearchViewController.swift */,
 				F2DA02AB26B43D4300166652 /* KeywordDBModel.swift */,
 				F2DA02AD26B4520F00166652 /* KeywordModel.swift */,
+				F2DA02AF26B5884400166652 /* UserSearches.swift */,
+				F2DA02B126B677DB00166652 /* UserSearchCell.swift */,
+				F2DA02B526B7BD2300166652 /* SearchResultViewController.swift */,
+				F2DA02B726B7D70900166652 /* SearchDBModel.swift */,
+				F2DA02B926B7ECCD00166652 /* SearchModel.swift */,
 			);
 			path = JW;
 			sourceTree = "<group>";
@@ -369,13 +384,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				02B18D9726B2F03F0032A0B8 /* ViewController.swift in Sources */,
+				F2DA02B626B7BD2300166652 /* SearchResultViewController.swift in Sources */,
 				02B18D9326B2F03F0032A0B8 /* AppDelegate.swift in Sources */,
+				F2DA02BA26B7ECCD00166652 /* SearchModel.swift in Sources */,
 				02B18DBE26B2F4400032A0B8 /* DHViewController.swift in Sources */,
 				F2DA02AC26B43D4300166652 /* KeywordDBModel.swift in Sources */,
 				02D8AC6026B312960091D4E1 /* UserDBModel.swift in Sources */,
 				02D8AC5C26B312490091D4E1 /* LoginViewController.swift in Sources */,
 				02B18DB226B2F1B70032A0B8 /* Share.swift in Sources */,
 				02B18DC026B2F4460032A0B8 /* SAViewController.swift in Sources */,
+				F2DA02B226B677DB00166652 /* UserSearchCell.swift in Sources */,
 				02B18DC326B2F45B0032A0B8 /* JWViewController.swift in Sources */,
 				02B18DBA26B2F4260032A0B8 /* HKViewController.swift in Sources */,
 				02B18DC526B2F4650032A0B8 /* MJViewController.swift in Sources */,
@@ -385,6 +403,8 @@
 				02B18DAE26B2F0D50032A0B8 /* EmptyDBModel.swift in Sources */,
 				F2DA02AE26B4520F00166652 /* KeywordModel.swift in Sources */,
 				02D8AC5E26B312590091D4E1 /* FindPasswordViewController.swift in Sources */,
+				F2DA02B826B7D70900166652 /* SearchDBModel.swift in Sources */,
+				F2DA02B026B5884400166652 /* UserSearches.swift in Sources */,
 				02B18DAC26B2F0A80032A0B8 /* EmptyProcess.swift in Sources */,
 				02B18DBC26B2F4350032A0B8 /* CHViewController.swift in Sources */,
 				02B18DB026B2F1270032A0B8 /* ExtensionUIButton.swift in Sources */,

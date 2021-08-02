@@ -7,16 +7,9 @@
 
 import UIKit
 import SnapKit
+import SQLite3
 
 /// CollectionView temp Data
-private let topItems:[String] = [
-    "브로콜리",
-    "양파",
-    "햇감자",
-    "카레",
-    "당근",
-    "돼지고기"]
-
 private let bottomItems:[String] = [
     "김치",
     "다진마늘",
@@ -34,33 +27,52 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var userSearchTableView: UITableView!
     @IBOutlet weak var backButtonItem: UIBarButtonItem!
 
-    /// NSArray
+    /// Array
     var feedItem: NSArray = NSArray()
     var tagArray:[(Int,String)] = []
+    
+    /// SQLite
+    var db: OpaquePointer?
+    var userSearchList:[UserSearches] = []
+    
+    /// SearchBar
+    let searchController = UISearchController(searchResultsController: nil)
+    var searchWord:String = ""
     
     /// viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        createSQLite()                         // SQLite table init
         setupNavigationbarView()               // Navigationbar Setting
         setupCollectionTopView()               // CollectionView (Top)
         setupCollectionBottomView()            // CollectionView (Bottom)
-        collectionTopView.dataSource = self
+        collectionTopView.dataSource = self    // CollectionView : Extension
         userSearchTableView.dataSource = self  // TableView : Extension
         userSearchTableView.delegate = self    // TableView : Extension
         
-        
     } // viewDidLoad
     
+
+    /// viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         // Get Items from DB
         let keywordModel = KeywordModel()
         keywordModel.delegate = self
         keywordModel.downloadItems()
-        
+        selectValues()
+        self.collectionTopView.reloadData()
+        self.collectionBottomView.reloadData()
+        self.userSearchTableView.reloadData()
         
     } // viewWillAppear
+    
+    func toSearchResult(searchWith: String) {
+        searchWord = searchWith
+        
+        self.performSegue(withIdentifier: "sgSearchResult", sender: self)
+    }
     
     /// 화면구성 * * * * * * * * * * * * * * * * * * * * *
     
@@ -71,19 +83,20 @@ class SearchViewController: UIViewController {
         let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 200, height: 0))
         searchBar.placeholder = "검색어를 입력해주세요"
         
-        
         self.navigationItem.titleView = searchBar
         
         // 우측 검색
         let searchOK = UIBarButtonItem(systemItem: .search, primaryAction: UIAction{ _ in
-            // 검색화면으로 이동!
+            // 검색버튼 누르면 아래를 작동
+            let search = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            print("search : \(search)")
+            self.insertSearchValues(search)
+            self.toSearchResult(searchWith: search)
+            searchBar.text?.removeAll()
+            print("Button")
         })
-
-        
         self.navigationItem.rightBarButtonItem = searchOK
-        
-        
-        
+
     } // setupNavigationbarView
     
     /// TopCollectionView ( 상단 Collection View )
@@ -123,21 +136,59 @@ class SearchViewController: UIViewController {
     } // setupCollectionTopView
     /// * * * * * * * * * * * * * * * * * * *
     
+    /// SQlite : Delete Func
+    @IBAction func btnUserSearchDelete(_ sender: UIButton) {
+        deleteSearchValues()
+        self.userSearchTableView.reloadData()
+        viewWillAppear(true)
+    } // btnUserSearchDelete
     
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    /// Prepare * * * * * *
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    
+        // SearchBar
+        if segue.identifier == "sgSearchResult" {
+            let searchResultView2 = segue.destination as! SearchResultViewController
+            searchResultView2.searchWord(searchWith: searchWord)
+        }
+        
+        
+        // CollectionView (Top) 통해서 Prepare
+        if segue.identifier == "sgCollectionToResult" {
+
+            let searchResultView = segue.destination as! SearchResultViewController
+            searchResultView.searchWord(searchWith: searchWord)
+            print("Collection Bottom Cell")
+        }
+
+        
+        
+        // TableView 통해서 넘어가는 Prepare
+        if segue.identifier == "sgSearchResultFromTableCell" {
+            let cell = sender as! UITableViewCell
+            let indexPath = self.userSearchTableView.indexPath(for: cell)
+            
+            let searchResultView = segue.destination as! SearchResultViewController
+            
+            searchResultView.searchWord(searchWith: userSearchList[indexPath!.row].content)
+            
+            print("Table Cell")
+        }
+            
+        
+        
+        
+        
+        
+        
+    } // prepare
 
     
     /// TableView Setting
     
-    
+    /// Tag Count
     func readtags() -> Array<(Int,String)> {
         print("Start func : readtags")
             var arr:[(Int,String)] = []
@@ -168,20 +219,157 @@ class SearchViewController: UIViewController {
                 print(arraySorted)
             }
             return arraySorted
+        } // readtags
+    
+    /// Searchbar
+    func searchBarIsEmpty() -> Bool{
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    /// SQLite : CREATE TABLE * * * * * *
+    func createSQLite(){
+        let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("UserSearchData.sqlite")
+        
+        if sqlite3_open(fileURL.path, &db) != SQLITE_OK{
+            // SQLite가 열리지 않으면?
+            print("error opening database")
         }
+        
+        if sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS search(id INTEGER PRIMARY KEY AUTOINCREMENT, content TEXT, date TEXT)", nil, nil, nil) != SQLITE_OK{
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("error creating table : \(errmsg)")
+        }
+        // CURRENT_TIMESTAMP
+        selectValues()
+    }
+
+    /// SQLite : SELECT * * * * * *
+    func selectValues() {
+        // Init Array
+        userSearchList.removeAll()
+        
+        // Query
+        let queryString = "SELECT * FROM search"
+        
+        // Statement
+        var stmt: OpaquePointer?
+        
+        //
+        if sqlite3_prepare(db, queryString, -1, &stmt, nil) != SQLITE_OK{
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("error preparing select : \(errmsg)")
+            return
+        }
+        
+        // 한줄씩 가져오기
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            // Int 값 불러오기
+            let id = sqlite3_column_int(stmt, 0)
+            let content = String(cString: sqlite3_column_text(stmt, 1))
+            let date = String(cString: sqlite3_column_text(stmt, 2))
+            
+            // Data 잘 들어갔나 확인
+            print(id, content, date)
+            
+            // describing:
+            userSearchList.append(UserSearches(id: Int(id), content: String(content), date: String(date)))
+            
+        }
+        // 값이 들어왔으면 재구성
+        self.userSearchTableView.reloadData()
+    }
     
+    /// SQLite : INSERT * * * * * *
+    func insertSearchValues(_ search: String){
+        var stmt: OpaquePointer?
+        // 한글 깨짐 방지 (-1 는 2byte의 범위를 잡아주는 것이다)
+        let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
+
+        let content = search
+        print("content : \(content)")
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM월 dd일"
+        let currentDate = formatter.string(from: Date())
+        let date = currentDate
+
+        let queryString = "INSERT INTO search(content, date) VALUES (?,?)"
+
+        // != SQLITE_OK 가 아니면 {  } 실행
+        if sqlite3_prepare(db, queryString, -1, &stmt, nil) != SQLITE_OK{
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("error preparing insert : \(errmsg)")
+            return    // return 할께 없는게 이게 있으면? 그냥 함수를 빠져나가는 것이다!
+        }
+
+        // 1번째 VALUES(?) 처리
+        if sqlite3_bind_text(stmt, 1, content, -1, SQLITE_TRANSIENT) != SQLITE_OK{
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("error binding content : \(errmsg)")
+            return
+        }
+        // 2번째 VALUES(?) 처리
+        if sqlite3_bind_text(stmt, 2, date, -1, SQLITE_TRANSIENT) != SQLITE_OK{
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("error binding date : \(errmsg)")
+            return
+        }
+        // 실행시키기
+        if sqlite3_step(stmt) != SQLITE_DONE{
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("failure inserting search : \(errmsg)")
+            return
+        }
+
+    }
+
+    /// SQLite : DELETE * * * * * *
+    func deleteSearchValues(){
+        var stmt: OpaquePointer?
+        // 한글 깨짐 방지 (-1 는 2byte의 범위를 잡아주는 것이다)
+        _ = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
+        
+        let queryString = "DELETE FROM search"
+        
+        // != SQLITE_OK 가 아니면 {  } 실행
+        if sqlite3_prepare(db, queryString, -1, &stmt, nil) != SQLITE_OK{
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("error preparing delete : \(errmsg)")
+            return    // return 할께 없는게 이게 있으면? 그냥 함수를 빠져나가는 것이다!
+        }
+        
+        // 실행시키기
+        if sqlite3_step(stmt) != SQLITE_DONE{
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("failure deleting search : \(errmsg)")
+            return
+        }
+        
+        print("Search info delete successfully")
+        
+    } // deleteSearchValues
+   
     
-    
-    
-    
-    
-    
-} // SearchViewController
+} // SearchViewController * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 
 /// Extension : UICollection  * * * * * * * * * * * *
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+ 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        switch collectionView {
+        case self.collectionTopView:
+            self.searchWord = tagArray[indexPath.row].1
+            self.insertSearchValues(tagArray[indexPath.row].1)
+            self.performSegue(withIdentifier: "sgCollectionToResult", sender: self)
+           
+        default:
+            print("")
+        
+        }
+        print("Collection Bottom Cell")
+    }
     
     /// Cell 출력 갯수  * * * * * *
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -194,6 +382,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         }
     } // collectionView
 
+    
     
     /// Cell 내용 붙이기  * * * * * *
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -211,9 +400,10 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             BottomCell.configure(name: bottomItems[indexPath.row])
             return BottomCell
         } // switch
-        
+     
     } // collectionView
     
+    /// Cell Size * * * * * *
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         switch collectionView {
@@ -226,13 +416,6 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return CollectionBottomViewCell.fittingSize(availableHeight: 45, name: bottomItems[indexPath.item])
         }
     } // collectionView
-    
-    
-
-    
-    
-    
-    
     
     
 } // SearchViewController
@@ -331,32 +514,72 @@ final class CollectionBottomViewCell: UICollectionViewCell {
     
 } // CollectionBottomViewCell
 
+
+/// TableView Setting * * * * * *
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate{
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
+    /// Table 출력 수
+    func numberOfSections(in tableView: UITableView) -> Int { return 1 }
     
+    /// Table 최대 출력 수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return feedItem.count
+        return userSearchList.count
     }
     
+    /// Table Data 연결
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "userSearchCell", for: indexPath)
+        // Custom Cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "userSearchCell", for: indexPath) as! UserSearchCell
+    
+        // Data
+        let item = userSearchList[indexPath.row]
         
-        let item: KeywordDBModel = feedItem[indexPath.row] as! KeywordDBModel
-        
-        cell.textLabel?.text = "\(item.tag!)"
-        cell.imageView?.image = UIImage(named: "searchClock.png")
-        
+        // Cell 에 Data 연결
+        cell.lblSearchContent.text = item.content
+        cell.lblSearchDate.text = item.date
+
         return cell
     }
     
+    /// SQLite : DELETE - WHERE
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            var stmt: OpaquePointer?
+            // 한글 깨짐 방지 (-1 는 2byte의 범위를 잡아주는 것이다)
+            _ = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
+
+            let content = userSearchList[indexPath.row].content
+            let queryString = "DELETE FROM search WHERE content = '\(content)'"
+            print(queryString)
+            
+            // != SQLITE_OK 가 아니면 {  } 실행
+            if sqlite3_prepare(db, queryString, -1, &stmt, nil) != SQLITE_OK{
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error preparing delete : \(errmsg)")
+                return    // return 할께 없는게 이게 있으면? 그냥 함수를 빠져나가는 것이다!
+            }
+
+            // 실행시키기
+            if sqlite3_step(stmt) != SQLITE_DONE{
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("failure deleting search : \(errmsg)")
+                return
+            }
+            
+            // 오류가 있으면 return 으로 함수 밖으로 나가게 되기때문에 여기까지 오지 못한다.
+            // 이게 print 되면 이상이 없다는 의미!
+            print("Search info delete successfully")
+            self.userSearchList.remove(at: indexPath.row)
+            self.userSearchTableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    } // SQLite : DELETE - WHERE
+    
+    
+    
 } // SearchViewController
 
-
-/// Protocol : DB
+/// Protocol : DB * * * * * *
 extension SearchViewController: KeywordModelProtocol{
     func itemDownloaded(items: NSArray) {
         feedItem = items
@@ -368,5 +591,4 @@ extension SearchViewController: KeywordModelProtocol{
         self.collectionTopView.reloadData()
     }
     
-} // SearchViewController
-
+} // SearchViewController: KeywordModelProtocol
