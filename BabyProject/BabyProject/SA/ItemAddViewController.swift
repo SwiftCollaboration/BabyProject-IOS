@@ -447,11 +447,6 @@ extension ItemAddViewController: UICollectionViewDataSource, UICollectionViewDel
         cell.itemAddImageView.image = itemImageArray[indexPath.row]
         cell.backgroundColor = .lightGray // UIColor 생략하여 씀
         
-        // 삭제 처리
-//        cell.btnItemImageRemove = { [unowned self] in
-//            self.itemImageArray.remove(at: indexPath.row)
-//            self.itemAddCollectionView.reloadData()
-//        }
 
         return cell
         

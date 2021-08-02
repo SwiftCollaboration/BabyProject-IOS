@@ -79,12 +79,15 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="tintColor" name="MainColor"/>
                                                     <state key="normal" image="multiply.circle.fill" catalog="system"/>
+                                                    <connections>
+                                                        <action selector="btnItemImageRemoveAction:" destination="DNS-OF-uzi" eventType="touchUpInside" id="l9W-U8-6ks"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="100" height="100"/>
                                         <connections>
-                                            <outlet property="btnItemImageRemove" destination="jor-Ag-a6U" id="HBq-0I-vcm"/>
+                                            <outlet property="btnItemImageRemove" destination="jor-Ag-a6U" id="z0E-UL-LA2"/>
                                             <outlet property="itemAddImageView" destination="aaI-CU-qmz" id="sMj-Tx-C6O"/>
                                         </connections>
                                     </collectionViewCell>
