@@ -13,4 +13,6 @@ pod 'STTextView'
 pod 'KakaoSDKCommon'
 pod 'KakaoSDKAuth'
 pod 'KakaoSDKUser'
+pod 'naveridlogin-sdk-ios'
+pod 'GoogleSignIn'
 end

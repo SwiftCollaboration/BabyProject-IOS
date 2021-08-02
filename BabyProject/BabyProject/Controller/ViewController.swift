@@ -28,41 +28,47 @@ class ViewController: UIViewController {
     }
     
     @objc func goHK() {
-           let storyboard = UIStoryboard(name: "HK", bundle: nil)
-           let destinationVC = storyboard.instantiateViewController(withIdentifier: "HKViewController") as! HKViewController
-           destinationVC.modalPresentationStyle = .fullScreen
-           present(destinationVC, animated: true, completion: nil)
-       }
-       @objc func goCH() {
-           let storyboard = UIStoryboard(name: "CH", bundle: nil)
-           let destinationVC = storyboard.instantiateViewController(withIdentifier: "CHViewController") as! CHViewController
-           destinationVC.modalPresentationStyle = .fullScreen
-           present(destinationVC, animated: true, completion: nil)
-       }
-       @objc func goJW() {
-           let storyboard = UIStoryboard(name: "JW", bundle: nil)
-           let destinationVC = storyboard.instantiateViewController(withIdentifier: "JWViewController") as! JWViewController
-           destinationVC.modalPresentationStyle = .fullScreen
-           present(destinationVC, animated: true, completion: nil)
-       }
-       @objc func goMJ() {
-           let storyboard = UIStoryboard(name: "MJ", bundle: nil)
-           let destinationVC = storyboard.instantiateViewController(withIdentifier: "MJViewController") as! MJViewController
-           destinationVC.modalPresentationStyle = .fullScreen
-           present(destinationVC, animated: true, completion: nil)
-       }
-       @objc func goSA() {
-           let storyboard = UIStoryboard(name: "SA", bundle: nil)
-           let destinationVC = storyboard.instantiateViewController(withIdentifier: "SAViewController") as! SAViewController
-           destinationVC.modalPresentationStyle = .fullScreen
-           present(destinationVC, animated: true, completion: nil)
-       }
-       @objc func goDH() {
-           let storyboard = UIStoryboard(name: "DH", bundle: nil)
-           let destinationVC = storyboard.instantiateViewController(withIdentifier: "DHViewController") as! DHViewController
-           destinationVC.modalPresentationStyle = .fullScreen
-           present(destinationVC, animated: true, completion: nil)
-       }
+        let storyboard = UIStoryboard(name: "HK", bundle: nil)
+        let destinationVC = storyboard.instantiateViewController(withIdentifier: "HKViewController") as! HKViewController
+        let destinationNAV = UINavigationController(rootViewController: destinationVC)
+        destinationNAV.modalPresentationStyle = .fullScreen
+        present(destinationNAV, animated: true, completion: nil)
+    }
+    @objc func goCH() {
+        let storyboard = UIStoryboard(name: "CH", bundle: nil)
+        let destinationVC = storyboard.instantiateViewController(withIdentifier: "CHViewController") as! CHViewController
+        let destinationNAV = UINavigationController(rootViewController: destinationVC)
+        destinationNAV.modalPresentationStyle = .fullScreen
+        present(destinationNAV, animated: true, completion: nil)
+    }
+    @objc func goJW() {
+        let storyboard = UIStoryboard(name: "JW", bundle: nil)
+        let destinationVC = storyboard.instantiateViewController(withIdentifier: "JWViewController") as! JWViewController
+        let destinationNAV = UINavigationController(rootViewController: destinationVC)
+        destinationNAV.modalPresentationStyle = .fullScreen
+        present(destinationNAV, animated: true, completion: nil)
+    }
+    @objc func goMJ() {
+        let storyboard = UIStoryboard(name: "MJ", bundle: nil)
+        let destinationVC = storyboard.instantiateViewController(withIdentifier: "MJViewController") as! MJViewController
+        let destinationNAV = UINavigationController(rootViewController: destinationVC)
+        destinationNAV.modalPresentationStyle = .fullScreen
+        present(destinationNAV, animated: true, completion: nil)
+    }
+    @objc func goSA() {
+        let storyboard = UIStoryboard(name: "SA", bundle: nil)
+        let destinationVC = storyboard.instantiateViewController(withIdentifier: "SAViewController") as! SAViewController
+        let destinationNAV = UINavigationController(rootViewController: destinationVC)
+        destinationNAV.modalPresentationStyle = .fullScreen
+        present(destinationNAV, animated: true, completion: nil)
+    }
+    @objc func goDH() {
+        let storyboard = UIStoryboard(name: "DH", bundle: nil)
+        let destinationVC = storyboard.instantiateViewController(withIdentifier: "DHViewController") as! DHViewController
+        let destinationNAV = UINavigationController(rootViewController: destinationVC)
+        destinationNAV.modalPresentationStyle = .fullScreen
+        present(destinationNAV, animated: true, completion: nil)
+    }
 
 
 }
