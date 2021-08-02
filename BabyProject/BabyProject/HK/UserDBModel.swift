@@ -2,7 +2,7 @@
 //  UserDBModel.swift
 //  BabyProject
 //
-//  Created by hyogang on 2021/07/30.
+//  Created by hyogang on 2021/07/31.
 //
 
 import Foundation
