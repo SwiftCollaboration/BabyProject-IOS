@@ -15,4 +15,5 @@ pod 'KakaoSDKAuth'
 pod 'KakaoSDKUser'
 pod 'naveridlogin-sdk-ios'
 pod 'GoogleSignIn'
+pod 'Alamofire'
 end
