@@ -1,43 +1,42 @@
 //
-//  ItemAddViewController.swift
+//  ItemEditViewController.swift
 //  BabyProject
 //
-//  Created by TJ on 2021/08/02.
+//  Created by TJ on 2021/08/03.
 //
 
 import UIKit
 import STTextView // placeholder(textView) 기능
 
 // DB Model
-var category = ""
-var useage = ""
-var itemtitle = ""
-var itemcontent = ""
-var itemimage = ""
-var itemprice = 0
-var usernickname = "aaa" // ShareVar
-var address = ""
-var tag = ""
-var user_email = "aaa@naver.com" // ShareVar
+var itemEdit_category = ""
+var itemEdit_useage = 0
+//var itemEdit_itemTitle = ""
+//var itemEdit_itemContent = ""
+var itemEdit_itemimage = ""
+var itemEdit_itemprice = 0
+var itemEdit_usernickname = "" // ShareVar
+var itemEdit_address = ""
+var itemEdit_tag = ""
+var itemEdit_item_usercode = "" // ShareVar
 
 // Pickerview Data
-var selectedCategory = "" // 선택한 picker Data (selectedCategory)
-var selectedAge = "" // 선택한 picker Data (selectedAge)
-var selectedLocation = "" // 선택한 picker Data (selectedLocation)
+var itemEdit_selectedCategory = "" // 선택한 picker Data (selectedCategory)
+var itemEdit_selectedAge = "" // 선택한 picker Data (selectedAge)
+var itemEdit_selectedLocation = "" // 선택한 picker Data (selectedLocation)
 
-var pickerList = [["의류/침구", "이유식", "목욕/위생", "스킨케어", "외출용품", "문구/잡화"],
+var itemEdit_pickerList = [["의류/침구", "이유식", "목욕/위생", "스킨케어", "외출용품", "문구/잡화"],
                   ["생후 1년 미만", "생후 2년 미만", "만 3~5세"],
                   ["전체", "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"]]
 
-var itemImageArray: [UIImage] = []
- 
+var itemEdit_itemImageArray: [UIImage] = []
 
-var imageCount = 0
-var searchItem = "" // 검색어 입력
 
-class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+var itemEdit_searchItem = "" // 검색어 입력
+
+class ItemEditViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let picker = UIImagePickerController() // 갤러리용
-    var imageURL: URL?
+    
     
     @IBOutlet weak var itemAddCollectionView: UICollectionView!
     @IBOutlet weak var btnAddImage: UIButton!
@@ -52,13 +51,14 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var tfItemPrice: UITextField!
     @IBOutlet weak var tfTag: UITextField!
     @IBOutlet weak var tvItemContent: STTextView!
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // extension으로 설정한 것을 실행
         picker.delegate = self
-        itemAddCollectionView.delegate = self
-        itemAddCollectionView.dataSource = self
+//        ItemEditViewController.delegate = self
+//        ItemEditViewController.dataSource = self
 
         // 이미지추가 버튼
         btnAddImage.setTitle("\(itemImageArray.count)/10", for: .normal)
@@ -97,9 +97,9 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         tvItemContent.layer.addBorder([.top, .bottom], color: UIColor(named: "SubColor")!, width: 1)
         tvItemContent.layer.addBorder([.left, .right], color: UIColor.white, width: 1)
         tvItemContent.textContainerInset = UIEdgeInsets(top: 15,left: 10,bottom: 0,right: 0)
-
+        
         // Do any additional setup after loading the view.
-    } // viewDidLoad
+    }// viewDidLoad
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -109,8 +109,8 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     override func viewWillAppear(_ animated: Bool) {
         itemAddCollectionView.reloadData()
 
-        // 이미지추가 버튼
-        btnAddImage.setTitle("\(itemImageArray.count)/10", for: .normal)
+        // 이미지추가 버튼 title tnwjd
+        btnAddImage.setTitle("\(itemEdit_itemImageArray.count)/10", for: .normal)
     }
     
     // 이미지 추가 버튼 Action
@@ -124,14 +124,13 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             picker.sourceType = .photoLibrary
             present(picker, animated: true, completion: nil)
         }
-    }
+    } // btnImageAddAction
     
-    
-    // 카테고리 선택 Action
+    // 카테고리 선택 버튼
     @IBAction func btnCategoryAction(_ sender: UIButton) {
         let selectAlert = UIAlertController(title: "카테고리 선택", message: "상품에 맞는 카테고리를 선택하세요!\n\n\n\n\n\n", preferredStyle: .alert)
         // pickerView 추가
-        let pickerView = UIPickerView(frame: CGRect(x: 10, y: 50, width: 250, height: 120))
+        let pickerView = UIPickerView(frame: CGRect(x: 10, y: 50, width: 250, height: 150))
         pickerView.tag = 0
         pickerView.delegate = self
         pickerView.dataSource = self
@@ -153,11 +152,11 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         present(selectAlert, animated: true, completion: nil)
     } // btnCategoryAction
     
-    // 개월 수 버튼 Action
+    // 개월 수 버튼 액션
     @IBAction func btnAgeAction(_ sender: UIButton) {
         let selectAlert = UIAlertController(title: "개월 수 선택", message: "개월 수를 선택하세요!\n\n\n\n\n\n", preferredStyle: .alert)
         // pickerView 추가
-        let pickerView = UIPickerView(frame: CGRect(x: 10, y: 50, width: 250, height: 120))
+        let pickerView = UIPickerView(frame: CGRect(x: 10, y: 50, width: 250, height: 150))
         pickerView.tag = 1
         pickerView.delegate = self
         pickerView.dataSource = self
@@ -166,23 +165,22 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         let rightAction = UIAlertAction(title: "확인", style: .default, handler: {ACTION in
             // 실행할 내용
             // 카테고리 선택 버튼 Text 변경
-            self.btnAge.setTitle("\(selectedAge)", for: .normal)
+            self.btnAge.setTitle("\(itemEdit_selectedAge)", for: .normal)
             
             // DB Model용 변수
-            useage = selectedAge
-//            switch selectedAge {
-//            case "12개월 미만":
-//                useage = 1
-//                break
-//            case "24개월 미만":
-//                useage = 2
-//                break
-//            case "만 3~5세":
-//                useage = 3
-//                break
-//            default:
-//                break
-//            }
+            switch itemEdit_selectedAge {
+            case "12개월 미만":
+                itemEdit_useage = 1
+                break
+            case "24개월 미만":
+                itemEdit_useage = 2
+                break
+            case "만 3~5세":
+                itemEdit_useage = 3
+                break
+            default:
+                break
+            }
         })
         
         selectAlert.addAction(leftAction)
@@ -190,14 +188,13 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         selectAlert.view.addSubview(pickerView)
         
         present(selectAlert, animated: true, completion: nil)
-    } // btnAgeAction
-    
+    } //btnAgeAction
     
     // 거래 희망 지역 선택
     @IBAction func btnLocationAction(_ sender: UIButton) {
         let selectAlert = UIAlertController(title: "거래 희망 지역 선택", message: "거래 희망 지역을 선택하세요!\n\n\n\n\n\n", preferredStyle: .alert)
         // pickerView 추가
-        let pickerView = UIPickerView(frame: CGRect(x: 10, y: 50, width: 250, height: 120))
+        let pickerView = UIPickerView(frame: CGRect(x: 10, y: 50, width: 250, height: 150))
         pickerView.tag = 2
         pickerView.delegate = self
         pickerView.dataSource = self
@@ -237,7 +234,7 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             tagNum = 2
             break
         }
-        return pickerList[tagNum].count
+        return itemEdit_pickerList[tagNum].count
     }
 
     // picekrView 관련 Delegate
@@ -245,13 +242,13 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch pickerView.tag {
         case 0:
-            return pickerList[0][row]
+            return itemEdit_pickerList[0][row]
             break
         case 1:
-            return pickerList[1][row]
+            return itemEdit_pickerList[1][row]
             break
         default:
-            return pickerList[2][row]
+            return itemEdit_pickerList[2][row]
             break
         }
         
@@ -261,100 +258,23 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch pickerView.tag {
         case 0:
-            selectedCategory = "\(pickerList[0][row])"
-            print("selectedCategory : \(selectedCategory)")
+            itemEdit_selectedCategory = "\(itemEdit_pickerList[0][row])"
+            print("selectedCategory : \(itemEdit_selectedCategory)")
             break
         case 1:
-            selectedAge = "\(pickerList[1][row])"
-            print("selectedAge : \(selectedAge)")
+            itemEdit_selectedAge = "\(itemEdit_pickerList[1][row])"
+            print("selectedAge : \(itemEdit_selectedAge)")
             break
         default:
-            selectedLocation = "\(pickerList[2][row])"
-            print("selectedLocation : \(selectedLocation)")
+            itemEdit_selectedLocation = "\(itemEdit_pickerList[2][row])"
+            print("selectedLocation : \(itemEdit_selectedLocation)")
             break
         }
         
     }
     
-    // 등록 버튼 Action
-    @IBAction func barButtonAddAction(_ sender: UIBarButtonItem) {
-        let db_category = category
-        let db_useage = useage
-        itemtitle = (tfItemTitle.text?.trimmingCharacters(in: .whitespacesAndNewlines))!
-        itemcontent = tvItemContent.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        let itemImage = itemImageArray
-        itemprice = Int(tfItemPrice.text!.trimmingCharacters(in: .whitespacesAndNewlines))!
-        //userNickname = usernickname // ShareVar
-        address = "서울시 \(selectedLocation)".trimmingCharacters(in: .whitespacesAndNewlines)
-        tag = tfTag.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        //let db_user_email = user_email // ShareVar
-        
-        // 유효성 검사
-        if itemtitle == nil{
-            checkTextFieldAlert(item: "제목")
-        }else if btnCategory.titleLabel?.text! == "카테고리"{
-            checkSelectAlert(item: "카테고리")
-        }else if btnAge.titleLabel?.text! == "개월 수"{
-            checkSelectAlert(item: "개월 수")
-        }else if itemprice == nil{
-            checkTextFieldAlert(item: "원가")
-        }else if tag == nil{
-            checkTextFieldAlert(item: "태그")
-        }else if itemcontent == nil{
-            checkTextFieldAlert(item: "게시글 내용")
-        }else if btnLocation.titleLabel?.text! ==
-                    "거래 희망 지역"{
-            checkSelectAlert(item: "거래 희망 지역")
-            
-        }else{
-            // DB에 입력
-            let itemInsertModel = ItemInsertModel()
-            itemInsertModel.uploadImageFile(at: imageURL!, completionHandler: {_,_ in print("Upload Success \(self.imageURL!)")})
-            
-            //let result = itemInsertModel.insertItems(category: db_category, useAge: db_useage, itemTitle: itemTitle!, itemContent: itemContent, itemImage: itemImage, itemPrice: itemPrice!, userNickname: userNickname, address: address, tag: tag, user_email: db_item_usercode)
-            
-//            if result{
-//                let resultAlert = UIAlertController(title: "완료", message: "입력이 되었습니다.", preferredStyle: .alert)
-//                let onAction = UIAlertAction(title: "OK", style: .default, handler: {ACTION in
-//                    self.navigationController?.popViewController(animated: true)
-//                    self.dismiss(animated: true, completion: nil) // 이전 화면으로 이동
-//                })
-//
-//                resultAlert.addAction(onAction) // 실행할 액션을 추가
-//                // Alert 띄우기
-//                present(resultAlert, animated: true, completion: nil)
-//            }else{
-//                let resultAlert = UIAlertController(title: "실패", message: "에러가 발생 되었습니다.", preferredStyle: .alert)
-//                let onAction = UIAlertAction(title: "OK", style: .default, handler: {ACTION in
-//                    self.navigationController?.popViewController(animated: true)
-//                })
-//                resultAlert.addAction(onAction) // 실행할 액션을 추가
-//                // Alert 띄우기
-//                present(resultAlert, animated: true, completion: nil)
-//            }
-        }
-    }// barButtonAddAction
     
-    // 버튼 선택 항목을 확인하세요 Alert
-    func checkSelectAlert(item: String) {
-        let alert = UIAlertController(title: "\(item) 선택", message: "\(item)을 선택해주세요!", preferredStyle: .alert)
-        let onAction = UIAlertAction(title: "알겠습니다", style: .default, handler: nil)
-        
-        alert.addAction(onAction)
-        
-        present(alert, animated: true, completion: nil)
-    }
-    
-    // 텍스트필드 항목을 확인하세요 Alert
-    func checkTextFieldAlert(item: String) {
-        let alert = UIAlertController(title: "\(item) 확인", message: "\(item)을 입력해주세요!", preferredStyle: .alert)
-        let onAction = UIAlertAction(title: "알겠습니다", style: .default, handler: nil)
-        
-        alert.addAction(onAction)
-        
-        present(alert, animated: true, completion: nil)
-    }
-    
+
     /*
     // MARK: - Navigation
 
@@ -365,81 +285,35 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     */
 
-    
-} // ItemAddViewController
-
-// 테두리 상하좌우만 추가하기
-extension CALayer {
-    func addBorder(_ arr_edge: [UIRectEdge], color: UIColor, width: CGFloat) {
-        for edge in arr_edge {
-            let border = CALayer()
-            switch edge {
-            case UIRectEdge.top:
-                border.frame = CGRect.init(x: 0, y: 0, width: frame.width, height: width)
-                break
-            case UIRectEdge.bottom:
-                border.frame = CGRect.init(x: 0, y: frame.height - width, width: frame.width, height: width)
-                break
-            case UIRectEdge.left:
-                border.frame = CGRect.init(x: 0, y: 0, width: width, height: frame.height)
-                break
-            case UIRectEdge.right:
-                border.frame = CGRect.init(x: frame.width - width, y: 0, width: width, height: frame.height)
-                break
-            default:
-                break
-            }
-            border.backgroundColor = color.cgColor;
-            self.addSublayer(border)
-        }
-        /*
-         UIRectEdge.all, //전체
-         UIRectEdge.top, //상단
-         UIRectEdge.bottom, //하단
-         UIRectEdge.left, //왼쪽
-         UIRectEdge.right, //오른쪽
-         */
-    }
-} // extension CALayer
-
-// TextField 왼쪽 들여쓰기
-extension UITextField {
-  func addLeftPadding() {
-    let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: self.frame.height))
-    self.leftView = paddingView
-    self.leftViewMode = ViewMode.always
-  }
-} // extension UITextField
-
-//UICollectionView의 모양, 기능 설정
-extension ItemAddViewController: UICollectionViewDataSource, UICollectionViewDelegate{
-    
-    // cell의 갯수 return
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return itemImageArray.count
-    }
-    
-    // cell 구성(색깔 등)
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        // Identifier가 itemImageAddcell에 해당하는 cell에
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ItemImageAddCollectionViewCell", for: indexPath) as! ItemImageAddCollectionViewCell
-        // as! UICollectionViewCell는 Type 변환
-        
-        
-        cell.itemAddImageView.image = itemImageArray[indexPath.row]
-        cell.backgroundColor = .lightGray // UIColor 생략하여 씀
-        cell.btnItemImageRemove.layer.setValue(indexPath.row, forKey: "index")
-        cell.btnItemImageRemove.addTarget(self, action: "deleteUser:", for: UIControl.Event.touchUpInside)
-        
-
-        return cell
-        
-    }
 }
+
+////UICollectionView의 모양, 기능 설정
+//extension ItemAddViewController: UICollectionViewDataSource, UICollectionViewDelegate{
+//
+//    // cell의 갯수 return
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return itemEdit_itemImageArray.count
+//    }
+//
+//    // cell 구성(색깔 등)
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        // Identifier가 itemImageAddcell에 해당하는 cell에
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ItemImageAddCollectionViewCell", for: indexPath) as! ItemImageAddCollectionViewCell
+//        // as! UICollectionViewCell는 Type 변환
+//
+//
+//        cell.itemAddImageView.image = itemImageArray[indexPath.row]
+//        cell.backgroundColor = .lightGray // UIColor 생략하여 씀
+//
+//
+//        return cell
+//
+//    }
+//}
 
 
 // Cell Layout 정의
-extension ItemAddViewController: UICollectionViewDelegateFlowLayout{
+extension ItemEditViewController: UICollectionViewDelegateFlowLayout{
     
     // 위 아래 간격 minimumLineSpacingForSectionAt
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -464,8 +338,9 @@ extension ItemAddViewController: UICollectionViewDelegateFlowLayout{
     
 }
 
+
 // 갤러리 접근
-extension ItemAddViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+extension ItemEditViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
 //    func openLibrary(){
 //        self.picker.sourceType = .photoLibrary
 //        self.present(picker, animated: true, completion: nil)
@@ -475,7 +350,6 @@ extension ItemAddViewController: UIImagePickerControllerDelegate, UINavigationCo
 //        var newImage: UIImage?
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             itemImageArray.append(image)
-            imageURL = info[UIImagePickerController.InfoKey.imageURL] as? URL
             print("itemImageArray is \(itemImageArray)")
             // 이미지추가 버튼
             btnAddImage.setTitle("\(itemImageArray.count)/10", for: .normal)
@@ -487,31 +361,3 @@ extension ItemAddViewController: UIImagePickerControllerDelegate, UINavigationCo
         self.picker.dismiss(animated: true, completion: nil)
     }
 }
-
-
-
-/*
- MIT License
-
- Copyright (c) 2020 Tamerlan Satualdypov
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
- */
-
-
