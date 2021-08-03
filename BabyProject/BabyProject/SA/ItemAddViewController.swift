@@ -269,7 +269,7 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         let db_useage = useage
         let itemTitle = tfItemTitle.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         let itemContent = tvItemContent.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        let itemImage = ""
+        let itemImage = itemImageArray
         let itemPrice = Int(tfItemPrice.text!.trimmingCharacters(in: .whitespacesAndNewlines))
         let userNickname = usernickname // ShareVar
         let address = "서울시 \(selectedLocation)".trimmingCharacters(in: .whitespacesAndNewlines)
@@ -296,7 +296,9 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }else{
             // DB에 입력
             let itemInsertModel = ItemInsertModel()
-            let result = itemInsertModel.insertItems(category: db_category, useAge: db_useage, itemTitle: itemTitle!, itemContent: itemContent, itemImage: itemImage, itemPrice: itemPrice!, userNickname: userNickname, address: address, tag: tag, user_email: db_item_usercode)
+            let result = ItemInsertModel.ItemInsertPost.data.insertItem(category: db_category, useAge: db_useage, itemTitle: itemTitle!, itemContent: itemContent, itemImage: itemImage, itemPrice: itemPrice!, userNickname: userNickname, address: address, tag: tag, user_email: db_item_usercode)
+            
+            //let result = itemInsertModel.insertItems(category: db_category, useAge: db_useage, itemTitle: itemTitle!, itemContent: itemContent, itemImage: itemImage, itemPrice: itemPrice!, userNickname: userNickname, address: address, tag: tag, user_email: db_item_usercode)
             
             if result{
                 let resultAlert = UIAlertController(title: "완료", message: "입력이 되었습니다.", preferredStyle: .alert)
