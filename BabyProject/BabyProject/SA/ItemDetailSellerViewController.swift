@@ -9,11 +9,11 @@ import UIKit
 
 // DB Model
 var detailSeller_itemCode = 1 // 삭제시 필요
-var detailSeller_category = ""
+var detailSeller_category = "문구/잡화"
 var detailSeller_useage = ""
 var detailSeller_itemtitle = ""
 var detailSeller_itemcontent = ""
-var detailSeller_itemimage = ""
+var detailSeller_itemimage = "F50EC70B-14D5-47F1-87BB-ED66D3FA5B42.jpeg"
 var detailSeller_itemprice = 0
 var detailSeller_usernickname = "" // ShareVar
 var detailSeller_address = ""
@@ -135,14 +135,23 @@ class ItemDetailSellerViewController: UIViewController {
     
     
     
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        
+        // 클릭한 셀의 정보 가져오기
+        // segue 이름이 "sgDetail"이면
+        if segue.identifier == "sgItemEdit"{                    
+            let detailView = segue.destination as! ItemEditViewController // sender를 이용해서 ItemEditViewController과 연결
+                    
+            // indexPath의 Data를 가져옴
+            detailView.receiveItems(itemCode: detailSeller_itemCode, category: detailSeller_category, useage: detailSeller_useage, itemTitle: detailSeller_itemtitle, itemContent: detailSeller_itemcontent, itemimage: detailSeller_itemimage, itemprice: detailSeller_itemprice, usernickname: detailSeller_usernickname, address: detailSeller_address, tag: detailSeller_tag, user_email: detailSeller_user_email)
+        }
     }
-    */
+    
 
 } // ItemDetailSellerViewController

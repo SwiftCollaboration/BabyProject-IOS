@@ -70,7 +70,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wO8-lO-ZSm">
-                                <rect key="frame" x="108" y="93" width="306" height="100"/>
+                                <rect key="frame" x="216" y="93" width="198" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hHL-wo-VHy">
@@ -115,7 +115,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" name="SubColor"/>
                                 <color key="tintColor" name="AccentColor"/>
-                                <state key="normal" title="Button" image="photo.fill.on.rectangle.fill" catalog="system">
+                                <state key="normal" title="사진등록" image="photo.fill.on.rectangle.fill" catalog="system">
                                     <color key="titleColor" systemColor="labelColor"/>
                                 </state>
                                 <connections>
@@ -238,6 +238,10 @@
                                 <color key="tintColor" name="MainColor"/>
                                 <imageReference key="image" image="chevron.right" catalog="system" symbolScale="small"/>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V4l-x1-3R3">
+                                <rect key="frame" x="108" y="93" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="PKX-9H-3Gl"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -255,6 +259,7 @@
                         <outlet property="btnCategory" destination="ygI-lr-HFf" id="2p8-OO-iiw"/>
                         <outlet property="btnLocation" destination="LFZ-vj-3uB" id="NFj-ze-47I"/>
                         <outlet property="btnSearchPrice" destination="rmS-V0-CLL" id="KNi-3a-zfL"/>
+                        <outlet property="imgView" destination="V4l-x1-3R3" id="hdM-By-EFw"/>
                         <outlet property="itemAddCollectionView" destination="wO8-lO-ZSm" id="T2n-QH-ULs"/>
                         <outlet property="lblItemPrice" destination="exe-4y-VAL" id="Izo-MO-cLY"/>
                         <outlet property="tfItemPrice" destination="vUy-p5-v0F" id="TvM-qL-nf8"/>
@@ -667,7 +672,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Jmr-Ud-Fy0">
-                                <rect key="frame" x="108" y="93" width="306" height="100"/>
+                                <rect key="frame" x="216" y="93" width="198" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eTH-KI-JCN">
@@ -678,7 +683,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ItemImageEditCollectionViewCell" id="avi-Th-a89" customClass="ItemImageEditCollectionViewCell" customModule="BabyProject" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                        <rect key="frame" x="49" y="0.0" width="100" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="0kS-Gy-BQB">
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
@@ -712,7 +717,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" name="SubColor"/>
                                 <color key="tintColor" name="AccentColor"/>
-                                <state key="normal" title="Button" image="photo.fill.on.rectangle.fill" catalog="system">
+                                <state key="normal" title="사진등록" image="photo.fill.on.rectangle.fill" catalog="system">
                                     <color key="titleColor" systemColor="labelColor"/>
                                 </state>
                                 <connections>
@@ -832,12 +837,20 @@
                                 <color key="tintColor" name="MainColor"/>
                                 <imageReference key="image" image="chevron.right" catalog="system" symbolScale="small"/>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e64-hE-EXF">
+                                <rect key="frame" x="108" y="93" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fHg-xf-V1A"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="상품 수정" id="oVm-3K-Dy4">
-                        <barButtonItem key="rightBarButtonItem" title="완료" id="6qk-vx-eHg"/>
+                        <barButtonItem key="rightBarButtonItem" title="완료" id="6qk-vx-eHg">
+                            <connections>
+                                <action selector="btnItemEditAction:" destination="dYo-HG-wLw" id="beS-6h-rRe"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="btnAddImage" destination="eR0-BB-TN0" id="HRO-ds-c79"/>
@@ -845,6 +858,7 @@
                         <outlet property="btnCategory" destination="gsm-mH-Q3g" id="AV4-ue-E4R"/>
                         <outlet property="btnLocation" destination="QUH-hs-yye" id="pue-Nb-6LL"/>
                         <outlet property="btnSearchPrice" destination="CId-Qv-aaX" id="ddh-EE-EDa"/>
+                        <outlet property="imgView" destination="e64-hE-EXF" id="n3u-3s-2BI"/>
                         <outlet property="itemAddCollectionView" destination="Jmr-Ud-Fy0" id="RjC-H2-VVZ"/>
                         <outlet property="lblItemPrice" destination="pOL-S3-ntC" id="qKt-C0-xBj"/>
                         <outlet property="tfItemPrice" destination="7SO-q7-4O4" id="EyT-Wq-9Ur"/>

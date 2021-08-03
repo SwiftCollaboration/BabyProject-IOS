@@ -9,17 +9,17 @@ import UIKit
 import STTextView // placeholder(textView) 기능
 
 // DB Model
-var itemEdit_itemCode = 0
+var itemEdit_itemCode = 1
 var itemEdit_category = ""
-var itemEdit_useage = 0
+var itemEdit_useage = ""
 var itemEdit_itemTitle = ""
 var itemEdit_itemContent = ""
-var itemEdit_itemimage = ""
+var itemEdit_itemimage = "F50EC70B-14D5-47F1-87BB-ED66D3FA5B42.jpeg"
 var itemEdit_itemprice = 0
 var itemEdit_usernickname = "" // ShareVar
 var itemEdit_address = ""
 var itemEdit_tag = ""
-var itemEdit_item_usercode = "" // ShareVar
+var itemEdit_user_email = "" // ShareVar
 
 // Pickerview Data
 var itemEdit_selectedCategory = "" // 선택한 picker Data (selectedCategory)
@@ -30,15 +30,15 @@ var itemEdit_pickerList = [["의류/침구", "이유식", "목욕/위생", "스�
                   ["생후 1년 미만", "생후 2년 미만", "만 3~5세"],
                   ["전체", "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"]]
 
-var itemEdit_itemImageArray: [UIImage] = []
-
 
 var itemEdit_searchItem = "" // 검색어 입력
 
 class ItemEditViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let picker = UIImagePickerController() // 갤러리용
+    var imageURL: URL?
     
     
+    @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var itemAddCollectionView: UICollectionView!
     @IBOutlet weak var btnAddImage: UIButton!
     @IBOutlet weak var btnCategory: UIButton!
@@ -62,8 +62,10 @@ class ItemEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
 //        ItemEditViewController.dataSource = self
 
         // 이미지추가 버튼
-        btnAddImage.setTitle("\(itemImageArray.count)/10", for: .normal)
         btnAddImage.layer.cornerRadius = 10
+        
+        // 이미지 뷰
+        imgView.layer.cornerRadius = 10
 
         // 카테고리 버튼
         btnCategory.layer.addBorder([.top], color: UIColor(named: "SubColor")!, width: 1)
@@ -99,8 +101,37 @@ class ItemEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         tvItemContent.layer.addBorder([.left, .right], color: UIColor.white, width: 1)
         tvItemContent.textContainerInset = UIEdgeInsets(top: 15,left: 10,bottom: 0,right: 0)
         
+        
+        
+        //---------------------------------
+        // Data 넣어주기
+        //---------------------------------
+        let url = URL(string: "http://localhost:8080/bebeProject/image/\(itemEdit_itemimage)")
+        let data = try? Data(contentsOf: url!)
+        imgView.image = UIImage(data: data!)
+        
+        tfItemTitle.text = "  \(itemEdit_itemTitle)"
+        btnCategory.setTitle(itemEdit_category, for: .normal)
+        btnAge.setTitle(itemEdit_useage, for: .normal)
+        tfItemPrice.text = "\(itemEdit_itemprice)"
+        btnLocation.setTitle(itemEdit_address, for: .normal)
+        
         // Do any additional setup after loading the view.
     }// viewDidLoad
+    
+    func receiveItems(itemCode: Int, category: String, useage: String, itemTitle: String, itemContent: String, itemimage: String, itemprice: Int, usernickname: String, address: String, tag: String, user_email: String){
+        itemEdit_itemCode = itemCode
+        itemEdit_category = category
+        itemEdit_useage = useage
+        itemEdit_itemTitle = itemTitle
+        itemEdit_itemContent = itemContent
+        itemEdit_itemimage = itemimage
+        itemEdit_itemprice = itemprice
+        itemEdit_usernickname = usernickname
+        itemEdit_address = address
+        itemEdit_tag = tag
+        itemEdit_user_email = user_email
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -108,10 +139,6 @@ class ItemEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     // *** 위에 실행했던 View가 닫히고 다시 띄워질 때 ***
     override func viewWillAppear(_ animated: Bool) {
-        itemAddCollectionView.reloadData()
-
-        // 이미지추가 버튼 title tnwjd
-        btnAddImage.setTitle("\(itemEdit_itemImageArray.count)/10", for: .normal)
     }
     
     // 이미지 추가 버튼 Action
@@ -143,7 +170,7 @@ class ItemEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             self.btnCategory.setTitle("\(selectedCategory)", for: .normal)
             
             // DB Model용 변수
-            category = selectedCategory
+            itemEdit_category = selectedCategory
         })
         
         selectAlert.addAction(leftAction)
@@ -169,19 +196,7 @@ class ItemEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             self.btnAge.setTitle("\(itemEdit_selectedAge)", for: .normal)
             
             // DB Model용 변수
-            switch itemEdit_selectedAge {
-            case "12개월 미만":
-                itemEdit_useage = 1
-                break
-            case "24개월 미만":
-                itemEdit_useage = 2
-                break
-            case "만 3~5세":
-                itemEdit_useage = 3
-                break
-            default:
-                break
-            }
+            itemEdit_useage = itemEdit_selectedAge
         })
         
         selectAlert.addAction(leftAction)
@@ -213,6 +228,11 @@ class ItemEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         present(selectAlert, animated: true, completion: nil)
     } // btnLocationAction
+    
+    
+    // 수정 완료 버튼
+    @IBAction func btnItemEditAction(_ sender: UIBarButtonItem) {
+    }
     
     
     
@@ -286,79 +306,19 @@ class ItemEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     */
 
-}
-
-////UICollectionView의 모양, 기능 설정
-//extension ItemAddViewController: UICollectionViewDataSource, UICollectionViewDelegate{
-//
-//    // cell의 갯수 return
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return itemEdit_itemImageArray.count
-//    }
-//
-//    // cell 구성(색깔 등)
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        // Identifier가 itemImageAddcell에 해당하는 cell에
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ItemImageAddCollectionViewCell", for: indexPath) as! ItemImageAddCollectionViewCell
-//        // as! UICollectionViewCell는 Type 변환
-//
-//
-//        cell.itemAddImageView.image = itemImageArray[indexPath.row]
-//        cell.backgroundColor = .lightGray // UIColor 생략하여 씀
-//
-//
-//        return cell
-//
-//    }
-//}
-
-
-// Cell Layout 정의
-extension ItemEditViewController: UICollectionViewDelegateFlowLayout{
-    
-    // 위 아래 간격 minimumLineSpacingForSectionAt
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
-    }
-    
-    // 옆 간격 minimumInteritemSpacingForSectionAt
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
-    }
-    
-    // cell 사이즈 (옆 라인을 고려하여 설정) sizeForItemAt
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // 3등분하여 배치(1행당), 옆 간격이 1이므로 1를 빼줌
-//        let width = collectionView.frame.width / 3 - 1
-//        let size = CGSize(width: width, height: width) // 정사각형
-        let size = CGSize(width: 100, height: 100)
-
-        
-        return size
-    }
-    
-}
+} // ItemEditViewController
 
 
 // 갤러리 접근
 extension ItemEditViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-//    func openLibrary(){
-//        self.picker.sourceType = .photoLibrary
-//        self.present(picker, animated: true, completion: nil)
-//    }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//        var newImage: UIImage?
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            itemImageArray.append(image)
-            print("itemImageArray is \(itemImageArray)")
-            // 이미지추가 버튼
-            btnAddImage.setTitle("\(itemImageArray.count)/10", for: .normal)
-            
-            self.itemAddCollectionView.reloadData()
-//            itemImageArray += image as! UIImage
-        }
+            imgView.image = image
+            imageURL = info[UIImagePickerController.InfoKey.imageURL] as? URL
+            print(imageURL)
         
         self.picker.dismiss(animated: true, completion: nil)
+        }
     }
 }

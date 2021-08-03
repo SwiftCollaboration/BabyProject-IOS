@@ -13,7 +13,7 @@ var category = ""
 var useage = ""
 var itemtitle = ""
 var itemcontent = ""
-var itemimage = ""
+var itemimage:UIImage?
 var itemprice = 0
 var usernickname = "aaa" // ShareVar
 var address = ""
@@ -29,16 +29,17 @@ var pickerList = [["의류/침구", "이유식", "목욕/위생", "스킨케어"
                   ["생후 1년 미만", "생후 2년 미만", "만 3~5세"],
                   ["전체", "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"]]
 
-var itemImageArray: [UIImage] = []
+var itemImageArray: [UIImage] = [] // collectionViewCell용 변수
  
 
-var imageCount = 0
 var searchItem = "" // 검색어 입력
 
 class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let picker = UIImagePickerController() // 갤러리용
     var imageURL: URL?
     
+    
+    @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var itemAddCollectionView: UICollectionView!
     @IBOutlet weak var btnAddImage: UIButton!
     @IBOutlet weak var btnCategory: UIButton!
@@ -61,8 +62,11 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         itemAddCollectionView.dataSource = self
 
         // 이미지추가 버튼
-        btnAddImage.setTitle("\(itemImageArray.count)/10", for: .normal)
+        //btnAddImage.setTitle("\(itemImageArray.count)/10", for: .normal)
         btnAddImage.layer.cornerRadius = 10
+        
+        // 이미지 뷰
+        imgView.layer.cornerRadius = 10
 
         // 카테고리 버튼
         btnCategory.layer.addBorder([.top], color: UIColor(named: "SubColor")!, width: 1)
@@ -109,21 +113,29 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     override func viewWillAppear(_ animated: Bool) {
         itemAddCollectionView.reloadData()
 
-        // 이미지추가 버튼
-        btnAddImage.setTitle("\(itemImageArray.count)/10", for: .normal)
+        //// 이미지추가 버튼
+        //btnAddImage.setTitle("\(itemImageArray.count)/10", for: .normal)
     }
     
     // 이미지 추가 버튼 Action
     @IBAction func btnImageAddAction(_ sender: UIButton) {
-        if itemImageArray.count == 10{
-            let alert = UIAlertController(title: "알림", message: "더 이상 이미지를 추가할 수 없습니다!", preferredStyle: .alert)
-            let alertAction = UIAlertAction(title: "확인", style: .default, handler: nil)
-            alert.addAction(alertAction)
-            present(alert, animated: true, completion: nil)
-        }else{
-            picker.sourceType = .photoLibrary
-            present(picker, animated: true, completion: nil)
-        }
+        
+        // 갤러리를 띄우기
+        picker.sourceType = .photoLibrary
+        present(picker, animated: true, completion: nil)
+        
+        //-------------------------
+        // 이전 CollectionView용 코드
+        //-------------------------
+//        if itemImageArray.count == 10{
+//            let alert = UIAlertController(title: "알림", message: "더 이상 이미지를 추가할 수 없습니다!", preferredStyle: .alert)
+//            let alertAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+//            alert.addAction(alertAction)
+//            present(alert, animated: true, completion: nil)
+//        }else{
+//            picker.sourceType = .photoLibrary
+//            present(picker, animated: true, completion: nil)
+//        }
     }
     
     
@@ -278,11 +290,8 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     // 등록 버튼 Action
     @IBAction func barButtonAddAction(_ sender: UIBarButtonItem) {
-        let db_category = category
-        let db_useage = useage
         itemtitle = (tfItemTitle.text?.trimmingCharacters(in: .whitespacesAndNewlines))!
         itemcontent = tvItemContent.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        let itemImage = itemImageArray
         itemprice = Int(tfItemPrice.text!.trimmingCharacters(in: .whitespacesAndNewlines))!
         //userNickname = usernickname // ShareVar
         address = "서울시 \(selectedLocation)".trimmingCharacters(in: .whitespacesAndNewlines)
@@ -310,6 +319,15 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             // DB에 입력
             let itemInsertModel = ItemInsertModel()
             itemInsertModel.uploadImageFile(at: imageURL!, completionHandler: {_,_ in print("Upload Success \(self.imageURL!)")})
+            
+            let resultAlert = UIAlertController(title: "완료", message: "입력이 되었습니다.", preferredStyle: .alert)
+            let onAction = UIAlertAction(title: "OK", style: .default, handler: {ACTION in
+                    self.navigationController?.popViewController(animated: true)
+                    self.dismiss(animated: true, completion: nil) // 이전 화면으로 이동
+                })
+            resultAlert.addAction(onAction) // 실행할 액션을 추가
+            // Alert 띄우기
+            present(resultAlert, animated: true, completion: nil)
             
             //let result = itemInsertModel.insertItems(category: db_category, useAge: db_useage, itemTitle: itemTitle!, itemContent: itemContent, itemImage: itemImage, itemPrice: itemPrice!, userNickname: userNickname, address: address, tag: tag, user_email: db_item_usercode)
             
@@ -453,11 +471,7 @@ extension ItemAddViewController: UICollectionViewDelegateFlowLayout{
     
     // cell 사이즈 (옆 라인을 고려하여 설정) sizeForItemAt
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // 3등분하여 배치(1행당), 옆 간격이 1이므로 1를 빼줌
-//        let width = collectionView.frame.width / 3 - 1
-//        let size = CGSize(width: width, height: width) // 정사각형
         let size = CGSize(width: 100, height: 100)
-
         
         return size
     }
@@ -466,22 +480,22 @@ extension ItemAddViewController: UICollectionViewDelegateFlowLayout{
 
 // 갤러리 접근
 extension ItemAddViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-//    func openLibrary(){
-//        self.picker.sourceType = .photoLibrary
-//        self.present(picker, animated: true, completion: nil)
-//    }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//        var newImage: UIImage?
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            itemImageArray.append(image)
+            imgView.image = image
             imageURL = info[UIImagePickerController.InfoKey.imageURL] as? URL
-            print("itemImageArray is \(itemImageArray)")
-            // 이미지추가 버튼
-            btnAddImage.setTitle("\(itemImageArray.count)/10", for: .normal)
             
-            self.itemAddCollectionView.reloadData()
-//            itemImageArray += image as! UIImage
+//            // -------------------------
+//            // 이전 collectionView용 소스
+//            // -------------------------
+//            if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+//                itemImageArray.append(image)
+//                imageURL = info[UIImagePickerController.InfoKey.imageURL] as? URL
+//                print("itemImageArray is \(itemImageArray)")
+//            // 이미지추가 버튼
+//            btnAddImage.setTitle("\(itemImageArray.count)/10", for: .normal)
+//            self.itemAddCollectionView.reloadData()
         }
         
         self.picker.dismiss(animated: true, completion: nil)
