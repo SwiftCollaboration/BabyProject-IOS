@@ -35,6 +35,7 @@
 		02D8AC6026B312960091D4E1 /* UserDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D8AC5F26B312960091D4E1 /* UserDBModel.swift */; };
 		95C3E5F8B7E65BEEC0318FF1 /* Pods_BabyProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15559C9459B13D8FFA45654B /* Pods_BabyProject.framework */; };
 		F20B1AC926B4222F007A4117 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20B1AC826B4222F007A4117 /* SearchViewController.swift */; };
+		F24B376726B813A9007B8F0F /* SearchResultTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24B376626B813A9007B8F0F /* SearchResultTableCell.swift */; };
 		F2DA02AC26B43D4300166652 /* KeywordDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DA02AB26B43D4300166652 /* KeywordDBModel.swift */; };
 		F2DA02AE26B4520F00166652 /* KeywordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DA02AD26B4520F00166652 /* KeywordModel.swift */; };
 		F2DA02B026B5884400166652 /* UserSearches.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DA02AF26B5884400166652 /* UserSearches.swift */; };
@@ -77,6 +78,7 @@
 		6D1044F107F927ED3FB80F5C /* Pods-BabyProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabyProject.debug.xcconfig"; path = "Target Support Files/Pods-BabyProject/Pods-BabyProject.debug.xcconfig"; sourceTree = "<group>"; };
 		E1BC7AF6BDF9ABF086969E2A /* Pods-BabyProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabyProject.release.xcconfig"; path = "Target Support Files/Pods-BabyProject/Pods-BabyProject.release.xcconfig"; sourceTree = "<group>"; };
 		F20B1AC826B4222F007A4117 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		F24B376626B813A9007B8F0F /* SearchResultTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableCell.swift; sourceTree = "<group>"; };
 		F2DA02AB26B43D4300166652 /* KeywordDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordDBModel.swift; sourceTree = "<group>"; };
 		F2DA02AD26B4520F00166652 /* KeywordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordModel.swift; sourceTree = "<group>"; };
 		F2DA02AF26B5884400166652 /* UserSearches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearches.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				F2DA02B526B7BD2300166652 /* SearchResultViewController.swift */,
 				F2DA02B726B7D70900166652 /* SearchDBModel.swift */,
 				F2DA02B926B7ECCD00166652 /* SearchModel.swift */,
+				F24B376626B813A9007B8F0F /* SearchResultTableCell.swift */,
 			);
 			path = JW;
 			sourceTree = "<group>";
@@ -402,6 +405,7 @@
 				F20B1AC926B4222F007A4117 /* SearchViewController.swift in Sources */,
 				02B18DAE26B2F0D50032A0B8 /* EmptyDBModel.swift in Sources */,
 				F2DA02AE26B4520F00166652 /* KeywordModel.swift in Sources */,
+				F24B376726B813A9007B8F0F /* SearchResultTableCell.swift in Sources */,
 				02D8AC5E26B312590091D4E1 /* FindPasswordViewController.swift in Sources */,
 				F2DA02B826B7D70900166652 /* SearchDBModel.swift in Sources */,
 				F2DA02B026B5884400166652 /* UserSearches.swift in Sources */,

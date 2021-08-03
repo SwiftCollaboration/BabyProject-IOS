@@ -122,7 +122,7 @@ class SearchViewController: UIViewController {
     func setupCollectionBottomView() {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumLineSpacing = .zero
-        flowLayout.minimumInteritemSpacing = 15
+        flowLayout.minimumInteritemSpacing = 17
         flowLayout.scrollDirection = .horizontal
         flowLayout.sectionInset = .init(top: 5, left: 16, bottom: 5, right: 16)
         
@@ -163,8 +163,7 @@ class SearchViewController: UIViewController {
             print("Collection Bottom Cell")
         }
 
-        
-        
+ 
         // TableView 통해서 넘어가는 Prepare
         if segue.identifier == "sgSearchResultFromTableCell" {
             let cell = sender as! UITableViewCell
@@ -176,12 +175,7 @@ class SearchViewController: UIViewController {
             
             print("Table Cell")
         }
-            
-        
-        
-        
-        
-        
+ 
         
     } // prepare
 
@@ -369,6 +363,12 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         }
         print("Collection Bottom Cell")
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        let spaceInterItem = CGFloat(15)
+        
+        return spaceInterItem
     }
     
     /// Cell 출력 갯수  * * * * * *

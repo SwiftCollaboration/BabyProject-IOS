@@ -14,10 +14,15 @@ protocol SearchModelProtocol {
 class SearchModel{
     
     var delegate: SearchModelProtocol!
-    let urlPath = "http://172.20.10.6:8080/ios/searchresult_query.jsp"
+//    var urlPath = "http://192.168.35.46:8080/ios/searchresult_query.jsp"
+    let urlPath = "http://192.168.35.46:8080/ios/searchresult_test_query.jsp"
+    
+//    func getUrlPath(url: String){
+//        urlPath = url
+//    }
     
     func downloadItems(){
-        let url: URL = URL(string: urlPath)!
+        let url: URL = URL(string: self.urlPath)!
         let defaultSession = URLSession(configuration: URLSessionConfiguration.default)
         let task = defaultSession.dataTask(with: url){(data, response, error) in
             if error != nil{
@@ -51,12 +56,17 @@ class SearchModel{
             // Json 형태가 Kay&Value 형태로 되어있어서 그렇다.
             jsonElement = jsonResult[i] as! NSDictionary
             if let itemcode = jsonElement["itemcode"] as? String,
+               let category = jsonElement["category"] as? String,
                let useage = jsonElement["useage"] as? String,
-               let tag = jsonElement["tag"] as? String{
+               let itemtitle = jsonElement["itemtitle"] as? String,
+               let itemimage = jsonElement["itemimage"] as? String,
+               let usernickname = jsonElement["usernickname"] as? String,
+               let address = jsonElement["address"] as? String,
+               let tag = jsonElement["tag"] as? String,
+               let uploaddate = jsonElement["uploaddate"] as? String{
                 // 이상이 없으면 넣어준다.
-                let query = KeywordDBModel(itemcode: itemcode, useage: useage, tag: tag)
-               
-                locations.add(query)
+                let query = SearchDBModel(itemcode: itemcode, category: category, useage: useage, itemtitle: itemtitle, itemimage: itemimage, usernickname: usernickname, address: address, tag: tag, uploaddate: uploaddate)
+                    locations.add(query)
             }
             
         } // for
@@ -70,4 +80,4 @@ class SearchModel{
         })
     }
     
-} // KeywordModel
+} //SearchdModel
