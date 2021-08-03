@@ -9,10 +9,11 @@ import UIKit
 import STTextView // placeholder(textView) 기능
 
 // DB Model
+var itemEdit_itemCode = 0
 var itemEdit_category = ""
 var itemEdit_useage = 0
-//var itemEdit_itemTitle = ""
-//var itemEdit_itemContent = ""
+var itemEdit_itemTitle = ""
+var itemEdit_itemContent = ""
 var itemEdit_itemimage = ""
 var itemEdit_itemprice = 0
 var itemEdit_usernickname = "" // ShareVar

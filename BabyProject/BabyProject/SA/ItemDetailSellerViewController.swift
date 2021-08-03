@@ -18,9 +18,9 @@ var detailSeller_itemprice = 0
 var detailSeller_usernickname = "" // ShareVar
 var detailSeller_address = ""
 var detailSeller_tag = ""
-var detailSeller_dealCompleteDate: Date = Date()
-var detailSeller_deleteDate: Date = Date()
-var detailSeller_item_usercode = "" // ShareVar
+var detailSeller_dealCompleteDate = ""
+var detailSeller_deleteDate = ""
+var detailSeller_user_email = "" // ShareVar
 
 class ItemDetailSellerViewController: UIViewController {
     @IBOutlet weak var imgView: UIImageView!
@@ -65,6 +65,24 @@ class ItemDetailSellerViewController: UIViewController {
         
         // 수정/삭제 버튼
         btnItemEditDelete.layer.cornerRadius = 10
+        
+        //---------------------------------
+        // Data 넣어주기
+        //---------------------------------
+        let url = URL(string: "http://localhost:8080/bebeProject/image/\(detailSeller_itemimage)")
+        let data = try? Data(contentsOf: url!)
+        imgView.image = UIImage(data: data!)
+        
+        if detailSeller_dealCompleteDate != nil{
+            btnTradeStatus.setTitle("판매 중", for: .normal)
+        }
+        
+        lblNickname.text = "\(detailSeller_usernickname)\t\t"
+        lblTitle.text = "  \(detailSeller_itemtitle)"
+        lblCategory.text = "  \(detailSeller_category)"
+        lblUseAge.text = "  \(detailSeller_useage)"
+        lblCategoryAgePrice.text = "\(detailSeller_itemprice)원\t\t"
+        lblLocation.text = "\(detailSeller_address)"
         
         // Do any additional setup after loading the view.
     } // viewDidLoad

@@ -8,18 +8,18 @@
 import UIKit
 
 // DB Model
-var detailBuyer_category = ""
+var detailBuyer_category = "문구/잡화"
 var detailBuyer_useage = ""
-var detailBuyer_itemtitle = ""
+var detailBuyer_itemtitle = "팝니다"
 var detailBuyer_itemcontent = ""
-var detailBuyer_itemimage = ""
+var detailBuyer_itemimage = "F50EC70B-14D5-47F1-87BB-ED66D3FA5B42.jpeg"
 var detailBuyer_itemprice = 0
-var detailBuyer_usernickname = "" // ShareVar
-var detailBuyer_address = ""
+var detailBuyer_usernickname = "aaa" // ShareVar
+var detailBuyer_address = "서울시 서대문구"
 var detailBuyer_tag = ""
-var detailBuyer_dealCompleteDate: Date = Date()
-var detailBuyer_deleteDate: Date = Date()
-var detailBuyer_item_usercode = "" // ShareVar
+var detailBuyer_dealCompleteDate = ""
+var detailBuyer_deleteDate = ""
+var detailBuyer_user_email = "" // ShareVar
 
 class ItemDetailBuyerViewController: UIViewController {
     @IBOutlet weak var btnTradeStatus: UIButton!
@@ -38,6 +38,7 @@ class ItemDetailBuyerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(detailBuyer_dealCompleteDate)
         
         // 닉네임 라벨
         lblNickname.layer.addBorder([.top], color: UIColor(named: "SubColor")!, width: 1)
@@ -65,7 +66,24 @@ class ItemDetailBuyerViewController: UIViewController {
         // 채팅하기 버튼
         btnChat.layer.cornerRadius = 10
         
-
+        //---------------------------------
+        // Data 넣어주기
+        //---------------------------------
+        let url = URL(string: "http://localhost:8080/bebeProject/image/\(detailBuyer_itemimage)")
+        let data = try? Data(contentsOf: url!)
+        imgView.image = UIImage(data: data!)
+        
+        if detailBuyer_dealCompleteDate != nil{
+            btnTradeStatus.setTitle("판매 중", for: .normal)
+        }
+        
+        lblNickname.text = "\(detailBuyer_usernickname)\t\t"
+        lblTitle.text = "  \(detailBuyer_itemtitle)"
+        lblCategory.text = "  \(detailBuyer_category)"
+        lblUseAge.text = "  \(detailBuyer_useage)"
+        lblCategoryAgePrice.text = "\(detailBuyer_itemprice)원\t\t"
+        lblLocation.text = "\(detailBuyer_address)"
+        
         // Do any additional setup after loading the view.
     }
     
