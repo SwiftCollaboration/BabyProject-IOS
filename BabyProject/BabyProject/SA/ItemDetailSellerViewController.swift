@@ -8,6 +8,7 @@
 import UIKit
 
 // DB Model
+var detailSeller_itemCode = 1 // 삭제시 필요
 var detailSeller_category = ""
 var detailSeller_useage = ""
 var detailSeller_itemtitle = ""
@@ -79,6 +80,27 @@ class ItemDetailSellerViewController: UIViewController {
         let actionDestructive = UIAlertAction(title: "삭제", style: .destructive, handler: {ACTION in
             // 실행할 내용
             print("상품 삭제 실행")
+            let deleteModel = ItemDeleteModel()
+            let result = deleteModel.deleteItems(itemCode: detailSeller_itemCode)
+            
+            // 삭제(deleteDate)가 잘되었는 지 안되었는 지 확인
+            if result{
+                let resultAlert = UIAlertController(title: "완료", message: "삭제가 완료 되었습니다.", preferredStyle: .alert)
+                let onAction = UIAlertAction(title: "OK", style: .default, handler: {ACTION in
+                    self.navigationController?.popViewController(animated: true)
+                })
+                resultAlert.addAction(onAction) // 실행할 액션을 추가
+                // Alert 띄우기
+                self.present(resultAlert, animated: true, completion: nil)
+            }else{
+                let resultAlert = UIAlertController(title: "실패", message: "에러가 발생 되었습니다.", preferredStyle: .alert)
+                let onAction = UIAlertAction(title: "OK", style: .default, handler: {ACTION in
+                    self.navigationController?.popViewController(animated: true)
+                })
+                resultAlert.addAction(onAction) // 실행할 액션을 추가
+                // Alert 띄우기
+                self.present(resultAlert, animated: true, completion: nil)
+            }
         })
         let actionCancel = UIAlertAction(title: "취소", style: .cancel, handler: {ACTION in
             // 실행할 내용
