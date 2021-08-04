@@ -36,6 +36,9 @@
 		02EA2FE926B53DF5007B0281 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EA2FE826B53DF5007B0281 /* LoginModel.swift */; };
 		02EA2FEB26B53E6A007B0281 /* SignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EA2FEA26B53E6A007B0281 /* SignUpModel.swift */; };
 		02EA2FED26B53EB3007B0281 /* CheckSignUpInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EA2FEC26B53EB3007B0281 /* CheckSignUpInputField.swift */; };
+		322165FA26BA42B600CAD5B4 /* ItemEditModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322165F926BA42B600CAD5B4 /* ItemEditModel.swift */; };
+		322165FE26BA79D000CAD5B4 /* ItemDetailSellerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322165FD26BA79D000CAD5B4 /* ItemDetailSellerCollectionViewCell.swift */; };
+		3221661126BA973200CAD5B4 /* ItemDetailBuyerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3221661026BA973200CAD5B4 /* ItemDetailBuyerCollectionViewCell.swift */; };
 		32301EA126B79EDA00898C9B /* ItemImageAddCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32301EA026B79EDA00898C9B /* ItemImageAddCollectionViewCell.swift */; };
 		32A3F7CD26B791D700C57324 /* ItemDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A3F7CC26B791D700C57324 /* ItemDBModel.swift */; };
 		32A3F7D026B791FC00C57324 /* ItemInsertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A3F7CF26B791FC00C57324 /* ItemInsertModel.swift */; };
@@ -83,6 +86,9 @@
 		02EA2FEA26B53E6A007B0281 /* SignUpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpModel.swift; sourceTree = "<group>"; };
 		02EA2FEC26B53EB3007B0281 /* CheckSignUpInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckSignUpInputField.swift; sourceTree = "<group>"; };
 		15559C9459B13D8FFA45654B /* Pods_BabyProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BabyProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		322165F926BA42B600CAD5B4 /* ItemEditModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemEditModel.swift; sourceTree = "<group>"; };
+		322165FD26BA79D000CAD5B4 /* ItemDetailSellerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailSellerCollectionViewCell.swift; sourceTree = "<group>"; };
+		3221661026BA973200CAD5B4 /* ItemDetailBuyerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailBuyerCollectionViewCell.swift; sourceTree = "<group>"; };
 		32301EA026B79EDA00898C9B /* ItemImageAddCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemImageAddCollectionViewCell.swift; sourceTree = "<group>"; };
 		32A3F7CC26B791D700C57324 /* ItemDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ItemDBModel.swift; path = BabyProject/SA/ItemDBModel.swift; sourceTree = SOURCE_ROOT; };
 		32A3F7CF26B791FC00C57324 /* ItemInsertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ItemInsertModel.swift; path = BabyProject/SA/ItemInsertModel.swift; sourceTree = SOURCE_ROOT; };
@@ -235,6 +241,7 @@
 			children = (
 				32A3F7CC26B791D700C57324 /* ItemDBModel.swift */,
 				32A3F7CF26B791FC00C57324 /* ItemInsertModel.swift */,
+				322165F926BA42B600CAD5B4 /* ItemEditModel.swift */,
 				F7FF360D26B97B8500559A86 /* ItemDeleteModel.swift */,
 				32A3F7D226B7923D00C57324 /* ItemDetailQueryModel.swift */,
 				32A3F7CB26B791A600C57324 /* SA_DBModel */,
@@ -245,6 +252,8 @@
 				32D8911226B8F653004777F8 /* ItemDetailSellerViewController.swift */,
 				32D8911526B8F83D004777F8 /* ItemEditViewController.swift */,
 				32D8911826B907CB004777F8 /* ItemImageEditCollectionViewCell.swift */,
+				322165FD26BA79D000CAD5B4 /* ItemDetailSellerCollectionViewCell.swift */,
+				3221661026BA973200CAD5B4 /* ItemDetailBuyerCollectionViewCell.swift */,
 			);
 			path = SA;
 			sourceTree = "<group>";
@@ -409,6 +418,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3221661126BA973200CAD5B4 /* ItemDetailBuyerCollectionViewCell.swift in Sources */,
 				02EA2FE926B53DF5007B0281 /* LoginModel.swift in Sources */,
 				32A3F7D626B792F700C57324 /* ItemAddViewController.swift in Sources */,
 				02B18D9726B2F03F0032A0B8 /* ViewController.swift in Sources */,
@@ -426,9 +436,11 @@
 				32D8911626B8F83D004777F8 /* ItemEditViewController.swift in Sources */,
 				02B18DC026B2F4460032A0B8 /* SAViewController.swift in Sources */,
 				32D8911926B907CB004777F8 /* ItemImageEditCollectionViewCell.swift in Sources */,
+				322165FE26BA79D000CAD5B4 /* ItemDetailSellerCollectionViewCell.swift in Sources */,
 				02EA2FEB26B53E6A007B0281 /* SignUpModel.swift in Sources */,
 				02B18DC326B2F45B0032A0B8 /* JWViewController.swift in Sources */,
 				02B18DBA26B2F4260032A0B8 /* HKViewController.swift in Sources */,
+				322165FA26BA42B600CAD5B4 /* ItemEditModel.swift in Sources */,
 				02B18DC526B2F4650032A0B8 /* MJViewController.swift in Sources */,
 				32A3F7D326B7923D00C57324 /* ItemDetailQueryModel.swift in Sources */,
 				02D8AC5A26B30CEB0091D4E1 /* SignUpViewController.swift in Sources */,

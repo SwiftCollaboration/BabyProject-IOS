@@ -77,6 +77,7 @@ class ItemEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
 
         // 원가 찾기 버튼
         btnSearchPrice.layer.cornerRadius = 10
+        btnSearchPrice.isHidden = true
         
         // 제목 tf
         tfItemTitle.layer.addBorder([.top], color: UIColor(named: "SubColor")!, width: 1)
@@ -167,10 +168,10 @@ class ItemEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         let rightAction = UIAlertAction(title: "확인", style: .default, handler: {ACTION in
             // 실행할 내용
             // 카테고리 선택 버튼 Text 변경
-            self.btnCategory.setTitle("\(selectedCategory)", for: .normal)
+            self.btnCategory.setTitle("\(itemEdit_selectedCategory)", for: .normal)
             
             // DB Model용 변수
-            itemEdit_category = selectedCategory
+            itemEdit_category = itemEdit_selectedCategory
         })
         
         selectAlert.addAction(leftAction)
@@ -219,7 +220,7 @@ class ItemEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         let rightAction = UIAlertAction(title: "확인", style: .default, handler: {ACTION in
             // 실행할 내용
             // 카테고리 선택 버튼 Text 변경
-            self.btnLocation.setTitle("서울시 \(selectedLocation)", for: .normal)
+            self.btnLocation.setTitle("서울시 \(itemEdit_selectedLocation)", for: .normal)
         })
         
         selectAlert.addAction(leftAction)
@@ -232,6 +233,80 @@ class ItemEditViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     // 수정 완료 버튼
     @IBAction func btnItemEditAction(_ sender: UIBarButtonItem) {
+        itemEdit_itemTitle = (tfItemTitle.text?.trimmingCharacters(in: .whitespacesAndNewlines))!
+        itemEdit_itemContent = tvItemContent.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        itemEdit_itemprice = Int(tfItemPrice.text!.trimmingCharacters(in: .whitespacesAndNewlines))!
+        itemEdit_address = "서울시 \(itemEdit_selectedLocation)".trimmingCharacters(in: .whitespacesAndNewlines)
+        itemEdit_tag = tfTag.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        // 유효성 검사
+        if itemEdit_itemTitle == nil{
+            checkTextFieldAlert(item: "제목")
+        }else if btnCategory.titleLabel?.text! == "카테고리"{
+            checkSelectAlert(item: "카테고리")
+        }else if btnAge.titleLabel?.text! == "개월 수"{
+            checkSelectAlert(item: "개월 수")
+        }else if itemEdit_itemprice == nil{
+            checkTextFieldAlert(item: "원가")
+        }else if itemEdit_tag == nil{
+            checkTextFieldAlert(item: "태그")
+        }else if itemEdit_itemContent == nil{
+            checkTextFieldAlert(item: "게시글 내용")
+        }else if btnLocation.titleLabel?.text! ==
+                    "거래 희망 지역"{
+            checkSelectAlert(item: "거래 희망 지역")
+            
+        }else{
+            // DB에 입력
+            let itemEditModel = ItemEditModel()
+            itemEditModel.uploadImageFile(at: self.imageURL!, completionHandler: {_,_ in print("Upload Success \(self.imageURL!)")})
+            
+            let resultAlert = UIAlertController(title: "완료", message: "수정이 되었습니다.", preferredStyle: .alert)
+            let onAction = UIAlertAction(title: "OK", style: .default, handler: {ACTION in
+                    self.navigationController?.popViewController(animated: true)
+                    self.dismiss(animated: true, completion: nil) // 이전 화면으로 이동
+                })
+            resultAlert.addAction(onAction) // 실행할 액션을 추가
+            // Alert 띄우기
+            present(resultAlert, animated: true, completion: nil)
+            
+            changeSellerViewData() // 판매자 디테일뷰의 Data 변경
+            }
+    }// btnItemEditAction
+    
+    // 판매자 디테일뷰의 Data 변경
+    func changeSellerViewData(){
+        detailSeller_category = itemEdit_category
+        detailSeller_useage = itemEdit_useage
+        detailSeller_itemtitle = itemEdit_itemTitle
+        detailSeller_itemcontent = itemEdit_itemContent
+        detailSeller_itemimage = itemEdit_itemimage
+        detailSeller_itemprice = itemEdit_itemprice
+        detailSeller_address = itemEdit_address
+        detailSeller_tag = itemEdit_tag
+        
+        print(detailSeller_category, detailSeller_useage, detailSeller_itemtitle, detailSeller_itemcontent, detailSeller_itemimage,
+              detailSeller_itemprice, detailSeller_address, detailSeller_tag)
+    }
+        
+    // 버튼 선택 항목을 확인하세요 Alert
+    func checkSelectAlert(item: String) {
+        let alert = UIAlertController(title: "\(item) 선택", message: "\(item)을 선택해주세요!", preferredStyle: .alert)
+        let onAction = UIAlertAction(title: "알겠습니다", style: .default, handler: nil)
+            
+        alert.addAction(onAction)
+            
+        present(alert, animated: true, completion: nil)
+    }
+        
+    // 텍스트필드 항목을 확인하세요 Alert
+    func checkTextFieldAlert(item: String) {
+        let alert = UIAlertController(title: "\(item) 확인", message: "\(item)을 입력해주세요!", preferredStyle: .alert)
+        let onAction = UIAlertAction(title: "알겠습니다", style: .default, handler: nil)
+            
+        alert.addAction(onAction)
+            
+        present(alert, animated: true, completion: nil)
     }
     
     
@@ -316,7 +391,7 @@ extension ItemEditViewController: UIImagePickerControllerDelegate, UINavigationC
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             imgView.image = image
             imageURL = info[UIImagePickerController.InfoKey.imageURL] as? URL
-            print(imageURL)
+            print("imageURL is \(imageURL)")
         
         self.picker.dismiss(animated: true, completion: nil)
         }

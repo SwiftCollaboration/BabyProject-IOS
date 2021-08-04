@@ -1,21 +1,20 @@
 //
-//  ItemInsertModel.swift
+//  ItemEditModel.swift
 //  BabyProject
 //
-//  Created by TJ on 2021/08/02.
+//  Created by TJ on 2021/08/04.
 //
 
 import Foundation
-import SQLite3
 
 // Insert, Update, Delete할 때에는 protocol이 필요 X
 
-class ItemInsertModel:NSObject {
+class ItemEditModel:NSObject {
     var share = Share()
-    var urlPath = "http://192.168.0.127/bebeProject/ItemAddInsert_ios.jsp" // file 경로 지정
+    var urlPath = "http://192.168.0.127/bebeProject/ItemEdit_ios.jsp" // file 경로 지정
     
     // MARK: Img Upload
-    func itemInsert(with fileURL: URL, parameters: [String: String]?) -> Data? {
+    func itemEdit(with fileURL: URL, parameters: [String: String]?) -> Data? {
         // 파일을 읽을 수 없다면 nil을 리턴
         guard let filedata = try? Data(contentsOf: fileURL) else {
             return nil
@@ -32,6 +31,8 @@ class ItemInsertModel:NSObject {
             "Content-Type: \(mimetype)",
             "\r\n"]
         var data = headerLines.joined(separator:"\r\n").data(using:.utf8)!
+        itemEdit_itemimage = fileURL.lastPathComponent
+        print("fileName is \(itemEdit_itemimage)")
         
         
         // 그 다음에 파일 데이터를 붙이고
@@ -63,7 +64,7 @@ class ItemInsertModel:NSObject {
         
         // 경로를 준비하고
         //let url = URL(string: "\(filepath), ImageUpload.jsp")!
-        let urlStr = "http://localhost:8080/bebeProject/ItemAddInsert_ios.jsp?category=\(category)&useAge=\(useage)&itemTitle=\(itemtitle)&itemContent=\(itemcontent)&itemPrice=\(itemprice)&userNickname=\(usernickname)&address=\(address)&tag=\(tag)&user_email=\(user_email)"
+        let urlStr = "http://localhost:8080/bebeProject/ItemEdit_ios.jsp?category=\(itemEdit_category)&useAge=\(itemEdit_useage)&itemTitle=\(itemEdit_itemTitle)&itemContent=\(itemEdit_itemContent)&itemPrice=\(itemEdit_itemprice)&address=\(itemEdit_address)&tag=\(itemEdit_tag)&itemCode=\(itemEdit_itemCode)"
         
         // 한글이 nil로 되지않도록 인코딩
         guard let encodedStr = urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
@@ -82,7 +83,7 @@ class ItemInsertModel:NSObject {
                          forHTTPHeaderField: "Content-Type")
         
         // 파일URL로부터 multipart 데이터를 생성하고 업로드한다.
-        if let data = itemInsert(with: filepath, parameters: parameters) {
+        if let data = itemEdit(with: filepath, parameters: parameters) {
             let task = URLSession.shared.uploadTask(with: request, from: data){ data, res, _ in
                 completionHandler(data, res)
             }
@@ -92,36 +93,3 @@ class ItemInsertModel:NSObject {
     
 
 }
-    
-
-//
-////    // 잘 불러왔다면 true를 return
-////    func insertItems(category: String, useAge: String, itemTitle: String, itemContent: String, itemImage: String, itemPrice: Int, userNickname: String, address: String, tag: String, user_email: String) -> Bool{
-////        var result: Bool = true
-////        let urlAdd = "?category=\(category)&useAge=\(useAge)&itemTitle=\(itemTitle)&itemContent=\(itemContent)&itemImage=\(itemImage)&itemPrice=\(itemPrice)&userNickname=\(userNickname)&address=\(address)&tag=\(tag)&user_email=\(user_email)" // urlPath 뒤에 붙는 주소
-////        urlPath = urlPath + urlAdd
-////        print(urlPath)
-////
-////        // 한글 url encoding
-////        urlPath = urlPath.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
-////
-////        let url: URL = URL(string: urlPath)!
-////        // Session과 URL 연결
-////        let defaultSession = URLSession(configuration: URLSessionConfiguration.default)
-////        // Task를 정의, Json의 전체를 가져오기 위함,
-////        let task = defaultSession.dataTask(with: url){(data, response, error) in
-////            if error != nil {
-////                print("Failed to insert data")
-////                result = false
-////            }else {
-////                print("Data is inserted")
-////                result = true
-////            }
-////        }
-////        task.resume() // task 실행
-////        return result // 입력이 잘되면 true, 안되면 false를 return
-////    }
-////
-////}
-////
-////

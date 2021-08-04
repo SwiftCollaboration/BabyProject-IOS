@@ -78,6 +78,7 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
 
         // 원가 찾기 버튼
         btnSearchPrice.layer.cornerRadius = 10
+        btnSearchPrice.isHidden = true
         
         // 제목 tf
         tfItemTitle.layer.addBorder([.top], color: UIColor(named: "SubColor")!, width: 1)
@@ -318,7 +319,10 @@ class ItemAddViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }else{
             // DB에 입력
             let itemInsertModel = ItemInsertModel()
-            itemInsertModel.uploadImageFile(at: imageURL!, completionHandler: {_,_ in print("Upload Success \(self.imageURL!)")})
+            let result = itemInsertModel.uploadImageFile(at: imageURL!, completionHandler: {_,_ in print("Upload Success \(self.imageURL!)")})
+            
+            
+            print("result is : \(result)")
             
             let resultAlert = UIAlertController(title: "완료", message: "입력이 되었습니다.", preferredStyle: .alert)
             let onAction = UIAlertAction(title: "OK", style: .default, handler: {ACTION in

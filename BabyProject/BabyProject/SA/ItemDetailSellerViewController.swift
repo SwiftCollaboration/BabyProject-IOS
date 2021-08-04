@@ -12,15 +12,17 @@ var detailSeller_itemCode = 1 // 삭제시 필요
 var detailSeller_category = "문구/잡화"
 var detailSeller_useage = ""
 var detailSeller_itemtitle = ""
-var detailSeller_itemcontent = ""
-var detailSeller_itemimage = "F50EC70B-14D5-47F1-87BB-ED66D3FA5B42.jpeg"
-var detailSeller_itemprice = 0
+var detailSeller_itemcontent = "8555555"
+var detailSeller_itemimage = "EAE4EF91-BA89-441E-9236-F7AA5E49FC86.jpeg"
+var detailSeller_itemprice = 1000000
 var detailSeller_usernickname = "" // ShareVar
 var detailSeller_address = ""
-var detailSeller_tag = ""
+var detailSeller_tag = "1,2,3,4"
 var detailSeller_dealCompleteDate = ""
 var detailSeller_deleteDate = ""
 var detailSeller_user_email = "" // ShareVar
+
+var detailSeller_tagArray: [String] = detailSeller_tag.components(separatedBy: ",")
 
 class ItemDetailSellerViewController: UIViewController {
     @IBOutlet weak var imgView: UIImageView!
@@ -40,6 +42,10 @@ class ItemDetailSellerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // extension으로 설정한 것을 실행
+        self.tagCollectionView.dataSource = self
+        self.tagCollectionView.delegate = self
+        
         // 닉네임 라벨
         lblNickname.layer.addBorder([.top], color: UIColor(named: "SubColor")!, width: 1)
         lblNickname.layer.addBorder([.bottom, .left, .right], color: UIColor.white, width: 1)
@@ -53,8 +59,8 @@ class ItemDetailSellerViewController: UIViewController {
         lblCategoryAgePrice.layer.addBorder([.bottom, .left, .right], color: UIColor.white, width: 1)
         
         // tagCollectionView
-        tagCollectionView.layer.addBorder([.top], color: UIColor(named: "SubColor")!, width: 1)
-        tagCollectionView.layer.addBorder([.bottom, .left, .right], color: UIColor.white, width: 1)
+        tagCollectionView.layer.addBorder([.top, .bottom], color: UIColor(named: "SubColor")!, width: 1)
+        tagCollectionView.layer.addBorder([.left, .right], color: UIColor.white, width: 1)
         
         // tvContent (TextView)
         tvContent.layer.addBorder([.top], color: UIColor(named: "SubColor")!, width: 1)
@@ -81,11 +87,42 @@ class ItemDetailSellerViewController: UIViewController {
         lblTitle.text = "  \(detailSeller_itemtitle)"
         lblCategory.text = "  \(detailSeller_category)"
         lblUseAge.text = "  \(detailSeller_useage)"
-        lblCategoryAgePrice.text = "\(detailSeller_itemprice)원\t\t"
+        lblCategoryAgePrice.text = "\(numberFormatter(number: detailSeller_itemprice))원\t\t"
+        tvContent.text = detailSeller_itemcontent
         lblLocation.text = "\(detailSeller_address)"
+        
+        //print(tagArray)
         
         // Do any additional setup after loading the view.
     } // viewDidLoad
+    
+    // *** 위에 실행했던 View가 닫히고 다시 띄워질 때 ***
+    override func viewWillAppear(_ animated: Bool) {
+        // 변경된 Data 적용
+        let url = URL(string: "http://localhost:8080/bebeProject/image/\(detailSeller_itemimage)")
+        let data = try? Data(contentsOf: url!)
+        imgView.image = UIImage(data: data!)
+        
+        if detailSeller_dealCompleteDate != nil{
+            btnTradeStatus.setTitle("판매 중", for: .normal)
+        }
+        
+        lblNickname.text = "\(detailSeller_usernickname)\t\t"
+        lblTitle.text = "  \(detailSeller_itemtitle)"
+        lblCategory.text = "  \(detailSeller_category)"
+        lblUseAge.text = "  \(detailSeller_useage)"
+        lblCategoryAgePrice.text = "\(numberFormatter(number: detailSeller_itemprice))원\t\t"
+        tvContent.text = detailSeller_itemcontent
+        lblLocation.text = "\(detailSeller_address)"
+        
+        
+        tagCollectionView.reloadData()
+    }
+    
+    
+//    // 거래 상태 변경
+//    @IBAction func btnTradeStatusAction(_ sender: UIButton) {
+//    }
     
     
     // 수정/삭제 버튼 액션
@@ -133,6 +170,13 @@ class ItemDetailSellerViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    // 천단위 숫자 콤마 찍기
+    func numberFormatter(number: Int) -> String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        
+        return numberFormatter.string(from: NSNumber(value: number))!
+    }
     
     
     
@@ -155,3 +199,51 @@ class ItemDetailSellerViewController: UIViewController {
     
 
 } // ItemDetailSellerViewController
+
+
+//UICollectionView의 모양, 기능 설정
+extension ItemDetailSellerViewController: UICollectionViewDataSource, UICollectionViewDelegate{
+    
+    // cell의 갯수 return
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return detailSeller_tagArray.count
+    }
+    
+    // cell 구성(색깔 등)
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        // Identifier가 myCell에 해당하는 cell에
+        let cell = self.tagCollectionView.dequeueReusableCell(withReuseIdentifier: "ItemDetailSellerCollectionViewCell", for: indexPath) as! ItemDetailSellerCollectionViewCell
+        // as! UICollectionViewCell는 Type 변환
+        print(detailSeller_tagArray)
+        
+        cell.lblTag.text = detailSeller_tagArray[indexPath.row] // lblTag Data를 입력
+        cell.lblTag.layer.cornerRadius = 5
+        cell.lblTag.backgroundColor = UIColor(named: "SubColor")
+        return cell
+        
+    }
+}
+
+
+// Cell Layout 정의
+extension ItemDetailSellerViewController: UICollectionViewDelegateFlowLayout{
+    
+    // 위 아래 간격 minimumLineSpacingForSectionAt
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+    
+    // 옆 간격 minimumInteritemSpacingForSectionAt
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+    
+    // cell 사이즈 (옆 라인을 고려하여 설정) sizeForItemAt
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = tagCollectionView.frame.width / 4 - 1
+        let size = CGSize(width: width, height: tagCollectionView.frame.height)
+        
+        return size
+    }
+    
+}
