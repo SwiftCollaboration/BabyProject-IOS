@@ -17,10 +17,12 @@ protocol ItemDetailQueryModelProtocol {
 
 class ItemDetailQueryModel {
     var delegate: ItemDetailQueryModelProtocol! // Protocol
-    let urlPath = "http://192.168.0.127:8080/ios/student_query_ios.jsp" // file 경로 지정
+    var urlPath = "http://localhost:8080/bebeProject/ItemDetailQuery_ios.jsp" // file 경로 지정
     
     // async
-    func downloadItems() {
+    func downloadItems(itemCode: Int) {
+        let urlAdd = "?itemCode=\(itemCode)"
+        urlPath = urlPath + urlAdd
         let url: URL = URL(string: urlPath)!
         // Session과 URL 연결
         let defaultSession = URLSession(configuration: URLSessionConfiguration.default)

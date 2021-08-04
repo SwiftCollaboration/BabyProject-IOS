@@ -21,9 +21,8 @@ class ItemDBModel: NSObject{ // NSObject :: 가장 큰 타입
     var userNickname: String?
     var address: String?
     var tag: String?
-    var uploadDate: Date?
-    var dealCompleteDate: Date?
-    var deleteDate: Date?
+    var dealCompleteDate: String?
+    var deleteDate: String?
     var user_email: String?
     
     // 생성자 생성
@@ -32,8 +31,7 @@ class ItemDBModel: NSObject{ // NSObject :: 가장 큰 타입
         
     }
     
-    init(category: String, useAge: String, itemTitle: String, itemContent: String, itemImage: String, itemPrice: Int, userNickname: String, address: String, tag: String,
-         uploadDate: Date, dealCompleteDate: Date, deleteDate: Date, user_email: String) {
+    init(category: String, useAge: String, itemTitle: String, itemContent: String, itemImage: String, itemPrice: Int, userNickname: String, address: String, tag: String, dealCompleteDate: String, deleteDate: String, user_email: String) {
         self.category = category
         self.useAge = useAge
         self.itemTitle = itemTitle
@@ -43,7 +41,6 @@ class ItemDBModel: NSObject{ // NSObject :: 가장 큰 타입
         self.userNickname = userNickname
         self.address = address
         self.tag = tag
-        self.uploadDate = uploadDate
         self.dealCompleteDate = dealCompleteDate
         self.deleteDate = deleteDate
         self.user_email = user_email

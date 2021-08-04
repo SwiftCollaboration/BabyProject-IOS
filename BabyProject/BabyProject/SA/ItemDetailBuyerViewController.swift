@@ -37,13 +37,22 @@ class ItemDetailBuyerViewController: UIViewController {
     @IBOutlet weak var lblLocation: UILabel!
     @IBOutlet weak var btnChat: UIButton!
     
+    var feedItem: NSMutableArray = NSMutableArray() // 배열 생성, NSArray는 한번 생성되면 값을 바꿀 수 없음
+    var itemCode = 1 // receiveItem으로 받아올 것
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // extension으로 설정한 것을 실행
+        let queryModel = ItemDetailQueryModel() // 생성자 생성
+
+        // extension으로 정의한 것을 실행
+        queryModel.delegate = self
+        queryModel.downloadItems(itemCode: itemCode)
+        itemsToVariable() // 전역변수 DBModel 값 넣기
+        
         self.tagCollectionView.dataSource = self
         self.tagCollectionView.delegate = self
+        
         
         // 닉네임 라벨
         lblNickname.layer.addBorder([.top], color: UIColor(named: "SubColor")!, width: 1)
@@ -77,6 +86,7 @@ class ItemDetailBuyerViewController: UIViewController {
         //---------------------------------
         let url = URL(string: "http://localhost:8080/bebeProject/image/\(detailBuyer_itemimage)")
         let data = try? Data(contentsOf: url!)
+        print("data is \(data)")
         imgView.image = UIImage(data: data!)
         
         if detailBuyer_dealCompleteDate != nil{
@@ -92,6 +102,36 @@ class ItemDetailBuyerViewController: UIViewController {
         
         // Do any additional setup after loading the view.
     } // viewDidLoad
+    
+    // 화면이 내려가있다가 다시 팝업될 때 실행
+    override func viewWillAppear(_ animated: Bool) {
+        let queryModel = ItemDetailQueryModel() // 생성자 생성
+        
+        // extension으로 정의한 것을 실행
+        queryModel.delegate = self
+        queryModel.downloadItems(itemCode: itemCode)
+        itemsToVariable() // 전역변수에 DBModel 값 넣기
+    }
+    
+    // QueryModel로 불러온 데이터를 전역변수에 넣기
+    func itemsToVariable(){
+        print("feedItem is \(print(feedItem))")
+        let item: ItemDBModel = feedItem as! ItemDBModel
+        
+        
+        detailBuyer_category = item.category!
+        detailBuyer_useage = item.useAge!
+        detailBuyer_itemtitle = item.itemTitle!
+        detailBuyer_itemcontent = item.itemContent!
+        detailBuyer_itemimage = item.itemImage!
+        detailBuyer_itemprice = item.itemPrice!
+        detailBuyer_usernickname = item.userNickname!
+        detailBuyer_address = item.address!
+        detailBuyer_tag = item.tag!
+        detailBuyer_dealCompleteDate = item.dealCompleteDate!
+        detailBuyer_deleteDate = item.deleteDate!
+        detailBuyer_user_email = item.user_email!
+    }
     
     // 천단위 숫자 콤마 찍기
     func numberFormatter(number: Int) -> String {
@@ -164,4 +204,13 @@ extension ItemDetailBuyerViewController: UICollectionViewDelegateFlowLayout{
         return size
     }
     
+}
+
+
+// ItemDBModel에 설정한 Protocol 사용
+extension ItemDetailBuyerViewController: ItemDetailQueryModelProtocol{
+    func itemDownloaded(items: NSMutableArray) {
+        feedItem = items
+        //print("feedItem is \(feedItem)")
+    }
 }
