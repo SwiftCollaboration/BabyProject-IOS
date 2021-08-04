@@ -14,15 +14,15 @@ protocol SearchModelProtocol {
 class SearchModel{
     
     var delegate: SearchModelProtocol!
-//    var urlPath = "http://192.168.35.46:8080/ios/searchresult_query.jsp"
-    let urlPath = "http://192.168.35.46:8080/ios/searchresult_test_query.jsp"
     
-//    func getUrlPath(url: String){
-//        urlPath = url
-//    }
     
-    func downloadItems(){
-        let url: URL = URL(string: self.urlPath)!
+    func downloadItems(subUrl: String){
+        
+        var urlPath = "http://172.20.10.6:8080/ios/searchresult_query.jsp?search=\(subUrl)"
+        
+        urlPath = urlPath.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+        
+        let url: URL = URL(string: urlPath)!
         let defaultSession = URLSession(configuration: URLSessionConfiguration.default)
         let task = defaultSession.dataTask(with: url){(data, response, error) in
             if error != nil{

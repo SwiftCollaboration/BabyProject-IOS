@@ -11,12 +11,10 @@ import SQLite3
 
 /// CollectionView temp Data
 private let bottomItems:[String] = [
-    "김치",
-    "다진마늘",
-    "모짜렐라치즈",
-    "참기름",
-    "소고기",
-    "닭고기"]
+    "모빌",
+    "유아용 텀블러",
+    "아기욕조",
+    "카시트"]
 
 class SearchViewController: UIViewController {
 
@@ -98,6 +96,7 @@ class SearchViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = searchOK
 
     } // setupNavigationbarView
+    
     
     /// TopCollectionView ( 상단 Collection View )
     // CollectionView 모양 구성 : flowLayout
